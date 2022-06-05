@@ -24,6 +24,10 @@ namespace Runescraper_v5._13
         public string name;
         public int volume;
         public int ge_price;
+        public int init_low;
+        public int init_high;
+        public int init_margin;
+        public long init_profit;
 
 
         public Item()

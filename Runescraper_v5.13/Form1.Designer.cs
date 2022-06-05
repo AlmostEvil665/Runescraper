@@ -32,15 +32,6 @@ namespace Runescraper_v5._13
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.scrape_btn = new System.Windows.Forms.Button();
             this.itemGridView = new System.Windows.Forms.DataGridView();
-            this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.low = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.high = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.volume = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.limit = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cost = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.margin = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.roi = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.profit = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.apply_btn = new System.Windows.Forms.Button();
             this.min_buy_lbl = new System.Windows.Forms.Label();
             this.min_buy_tbox = new System.Windows.Forms.TextBox();
@@ -67,7 +58,31 @@ namespace Runescraper_v5._13
             this.add_lbl = new System.Windows.Forms.Label();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.flipsGridView = new System.Windows.Forms.DataGridView();
+            this.add_flip_btn = new System.Windows.Forms.Button();
+            this.remove_flip_btn = new System.Windows.Forms.Button();
+            this.flips_lbl = new System.Windows.Forms.Label();
+            this.items_lbl = new System.Windows.Forms.Label();
+            this.flip_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.flip_low = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.flip_high = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.init_buy = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.init_sell = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.flip_margin = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.init_margin = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.flip_profit = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.init_profit = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.low = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.high = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.volume = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.limit = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cost = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.margin = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.roi = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.profit = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.itemGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.flipsGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // scrape_btn
@@ -93,56 +108,11 @@ namespace Runescraper_v5._13
             this.margin,
             this.roi,
             this.profit});
-            this.itemGridView.Location = new System.Drawing.Point(12, 23);
+            this.itemGridView.Location = new System.Drawing.Point(12, 284);
             this.itemGridView.Name = "itemGridView";
-            this.itemGridView.Size = new System.Drawing.Size(1050, 551);
+            this.itemGridView.Size = new System.Drawing.Size(1050, 290);
             this.itemGridView.TabIndex = 1;
             this.itemGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
-            // 
-            // name
-            // 
-            this.name.HeaderText = "Name";
-            this.name.Name = "name";
-            // 
-            // low
-            // 
-            this.low.HeaderText = "Buy Price";
-            this.low.Name = "low";
-            // 
-            // high
-            // 
-            this.high.HeaderText = "Sell Price";
-            this.high.Name = "high";
-            // 
-            // volume
-            // 
-            this.volume.HeaderText = "Volume";
-            this.volume.Name = "volume";
-            // 
-            // limit
-            // 
-            this.limit.HeaderText = "Buy Limit";
-            this.limit.Name = "limit";
-            // 
-            // cost
-            // 
-            this.cost.HeaderText = "Cost";
-            this.cost.Name = "cost";
-            // 
-            // margin
-            // 
-            this.margin.HeaderText = "Margin";
-            this.margin.Name = "margin";
-            // 
-            // roi
-            // 
-            this.roi.HeaderText = "ROI";
-            this.roi.Name = "roi";
-            // 
-            // profit
-            // 
-            this.profit.HeaderText = "Profit";
-            this.profit.Name = "profit";
             // 
             // apply_btn
             // 
@@ -365,11 +335,166 @@ namespace Runescraper_v5._13
             this.groupBox1.TabIndex = 27;
             this.groupBox1.TabStop = false;
             // 
+            // flipsGridView
+            // 
+            this.flipsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.flipsGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.flip_name,
+            this.flip_low,
+            this.flip_high,
+            this.init_buy,
+            this.init_sell,
+            this.flip_margin,
+            this.init_margin,
+            this.flip_profit,
+            this.init_profit});
+            this.flipsGridView.Location = new System.Drawing.Point(10, 30);
+            this.flipsGridView.Name = "flipsGridView";
+            this.flipsGridView.Size = new System.Drawing.Size(1052, 219);
+            this.flipsGridView.TabIndex = 28;
+            // 
+            // add_flip_btn
+            // 
+            this.add_flip_btn.Location = new System.Drawing.Point(325, 255);
+            this.add_flip_btn.Name = "add_flip_btn";
+            this.add_flip_btn.Size = new System.Drawing.Size(75, 23);
+            this.add_flip_btn.TabIndex = 29;
+            this.add_flip_btn.Text = "Add Flips";
+            this.add_flip_btn.UseVisualStyleBackColor = true;
+            this.add_flip_btn.Click += new System.EventHandler(this.add_flip_btn_Click);
+            // 
+            // remove_flip_btn
+            // 
+            this.remove_flip_btn.Location = new System.Drawing.Point(610, 255);
+            this.remove_flip_btn.Name = "remove_flip_btn";
+            this.remove_flip_btn.Size = new System.Drawing.Size(75, 23);
+            this.remove_flip_btn.TabIndex = 30;
+            this.remove_flip_btn.Text = "Rem Flips";
+            this.remove_flip_btn.UseVisualStyleBackColor = true;
+            this.remove_flip_btn.Click += new System.EventHandler(this.remove_flip_btn_Click);
+            // 
+            // flips_lbl
+            // 
+            this.flips_lbl.AutoSize = true;
+            this.flips_lbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
+            this.flips_lbl.Location = new System.Drawing.Point(12, 1);
+            this.flips_lbl.Name = "flips_lbl";
+            this.flips_lbl.Size = new System.Drawing.Size(58, 26);
+            this.flips_lbl.TabIndex = 31;
+            this.flips_lbl.Text = "Flips";
+            // 
+            // items_lbl
+            // 
+            this.items_lbl.AutoSize = true;
+            this.items_lbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
+            this.items_lbl.Location = new System.Drawing.Point(12, 255);
+            this.items_lbl.Name = "items_lbl";
+            this.items_lbl.Size = new System.Drawing.Size(66, 26);
+            this.items_lbl.TabIndex = 32;
+            this.items_lbl.Text = "Items";
+            // 
+            // flip_name
+            // 
+            this.flip_name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.flip_name.HeaderText = "Name";
+            this.flip_name.Name = "flip_name";
+            // 
+            // flip_low
+            // 
+            this.flip_low.HeaderText = "Buy Price";
+            this.flip_low.Name = "flip_low";
+            // 
+            // flip_high
+            // 
+            this.flip_high.HeaderText = "Sell Price";
+            this.flip_high.Name = "flip_high";
+            // 
+            // init_buy
+            // 
+            this.init_buy.HeaderText = "Starting Buy";
+            this.init_buy.Name = "init_buy";
+            // 
+            // init_sell
+            // 
+            this.init_sell.HeaderText = "Starting Sell";
+            this.init_sell.Name = "init_sell";
+            // 
+            // flip_margin
+            // 
+            this.flip_margin.HeaderText = "Margin";
+            this.flip_margin.Name = "flip_margin";
+            // 
+            // init_margin
+            // 
+            this.init_margin.HeaderText = "Starting Margin";
+            this.init_margin.Name = "init_margin";
+            // 
+            // flip_profit
+            // 
+            this.flip_profit.HeaderText = "Profit";
+            this.flip_profit.Name = "flip_profit";
+            // 
+            // init_profit
+            // 
+            this.init_profit.HeaderText = "Starting Profit";
+            this.init_profit.Name = "init_profit";
+            // 
+            // name
+            // 
+            this.name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.name.HeaderText = "Name";
+            this.name.Name = "name";
+            // 
+            // low
+            // 
+            this.low.HeaderText = "Buy Price";
+            this.low.Name = "low";
+            // 
+            // high
+            // 
+            this.high.HeaderText = "Sell Price";
+            this.high.Name = "high";
+            // 
+            // volume
+            // 
+            this.volume.HeaderText = "Volume";
+            this.volume.Name = "volume";
+            // 
+            // limit
+            // 
+            this.limit.HeaderText = "Buy Limit";
+            this.limit.Name = "limit";
+            // 
+            // cost
+            // 
+            this.cost.HeaderText = "Cost";
+            this.cost.Name = "cost";
+            // 
+            // margin
+            // 
+            this.margin.HeaderText = "Margin";
+            this.margin.Name = "margin";
+            // 
+            // roi
+            // 
+            this.roi.HeaderText = "ROI";
+            this.roi.Name = "roi";
+            // 
+            // profit
+            // 
+            this.profit.HeaderText = "Profit";
+            this.profit.Name = "profit";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1261, 586);
+            this.Controls.Add(this.items_lbl);
+            this.Controls.Add(this.flips_lbl);
+            this.Controls.Add(this.remove_flip_btn);
+            this.Controls.Add(this.add_flip_btn);
+            this.Controls.Add(this.flipsGridView);
             this.Controls.Add(this.splitter1);
             this.Controls.Add(this.add_lbl);
             this.Controls.Add(this.add_tbox);
@@ -403,6 +528,7 @@ namespace Runescraper_v5._13
             this.Text = "Runescraper";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.itemGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.flipsGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -429,15 +555,6 @@ namespace Runescraper_v5._13
         private System.Windows.Forms.Label min_margin_lbl;
         private System.Windows.Forms.TextBox min_profit_tbox;
         private System.Windows.Forms.Label min_profit_lbl;
-        private System.Windows.Forms.DataGridViewTextBoxColumn name;
-        private System.Windows.Forms.DataGridViewTextBoxColumn low;
-        private System.Windows.Forms.DataGridViewTextBoxColumn high;
-        private System.Windows.Forms.DataGridViewTextBoxColumn volume;
-        private System.Windows.Forms.DataGridViewTextBoxColumn limit;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cost;
-        private System.Windows.Forms.DataGridViewTextBoxColumn margin;
-        private System.Windows.Forms.DataGridViewTextBoxColumn roi;
-        private System.Windows.Forms.DataGridViewTextBoxColumn profit;
         private System.Windows.Forms.Button suggest_item_btn;
         private System.Windows.Forms.Button delete_items_btn;
         private System.Windows.Forms.Button update_btn;
@@ -447,6 +564,29 @@ namespace Runescraper_v5._13
         private System.Windows.Forms.Label add_lbl;
         private System.Windows.Forms.Splitter splitter1;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.DataGridView flipsGridView;
+        private System.Windows.Forms.Button add_flip_btn;
+        private System.Windows.Forms.Button remove_flip_btn;
+        private System.Windows.Forms.Label flips_lbl;
+        private System.Windows.Forms.Label items_lbl;
+        private System.Windows.Forms.DataGridViewTextBoxColumn name;
+        private System.Windows.Forms.DataGridViewTextBoxColumn low;
+        private System.Windows.Forms.DataGridViewTextBoxColumn high;
+        private System.Windows.Forms.DataGridViewTextBoxColumn volume;
+        private System.Windows.Forms.DataGridViewTextBoxColumn limit;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cost;
+        private System.Windows.Forms.DataGridViewTextBoxColumn margin;
+        private System.Windows.Forms.DataGridViewTextBoxColumn roi;
+        private System.Windows.Forms.DataGridViewTextBoxColumn profit;
+        private System.Windows.Forms.DataGridViewTextBoxColumn flip_name;
+        private System.Windows.Forms.DataGridViewTextBoxColumn flip_low;
+        private System.Windows.Forms.DataGridViewTextBoxColumn flip_high;
+        private System.Windows.Forms.DataGridViewTextBoxColumn init_buy;
+        private System.Windows.Forms.DataGridViewTextBoxColumn init_sell;
+        private System.Windows.Forms.DataGridViewTextBoxColumn flip_margin;
+        private System.Windows.Forms.DataGridViewTextBoxColumn init_margin;
+        private System.Windows.Forms.DataGridViewTextBoxColumn flip_profit;
+        private System.Windows.Forms.DataGridViewTextBoxColumn init_profit;
     }
 }
 

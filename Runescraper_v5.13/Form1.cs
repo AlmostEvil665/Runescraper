@@ -15,10 +15,12 @@ namespace Runescraper_v5._13
     {
         Scraper _scraper;
         List<Item> _items;
+        List<Item> _flips;
         public Form1()
         {
             InitializeComponent();
             _items = new List<Item>();
+            _flips = new List<Item>();
             _scraper = new Scraper();
             string[] settings = new string[0];
             try
@@ -39,10 +41,13 @@ namespace Runescraper_v5._13
             {
 
             }
-            for (int i = 8; i < settings.Length; i++)
+            int i = 8;
+#pragma warning disable CS1717 // Assignment made to same variable
+            for (i = i; i < settings.Length; i++) //Assignment made to same variable
+
             {
                 string line = settings[i];
-                if (line == "")
+                if (line == "" || line == "flips\r")
                     break;
                 string[] vals = line.Split(',');
                 itemGridView.Rows.Add(vals[0], vals[1], vals[2], vals[3], vals[4], vals[5], vals[6], vals[7], vals[8]);
@@ -55,6 +60,25 @@ namespace Runescraper_v5._13
                 Int32.TryParse(vals[4], out item.limit);
                 _items.Add(item);
             }
+            for (i = i + 1; i < settings.Length; i++)
+            {
+                string line = settings[i];
+                if (line == "")
+                    break;
+                string[] vals = line.Split(',');
+                flipsGridView.Rows.Add(vals[0], vals[1], vals[2], vals[3], vals[4], vals[5], vals[6], vals[7], vals[8]);
+
+                Item item = new Item();
+                item.name = vals[0];
+                Int32.TryParse(vals[1], out item.low);
+                Int32.TryParse(vals[2], out item.high);
+                Int32.TryParse(vals[3], out item.init_low);
+                Int32.TryParse(vals[4], out item.init_high);
+                Int32.TryParse(vals[6], out item.init_margin);
+                item.init_profit = long.Parse(vals[8]);
+                _flips.Add(item);
+            }
+            #pragma warning restore CS1717 // Assignment made to same variable
         }
 
 
@@ -121,6 +145,7 @@ namespace Runescraper_v5._13
             apply_btn.Text = "Apply";
         }
 
+
         private void delete_items_btn_Click(object sender, EventArgs e)
         {
             foreach(DataGridViewRow row in itemGridView.Rows)
@@ -171,7 +196,19 @@ namespace Runescraper_v5._13
                 }
                 settings.Add(s);
             }
+            settings.Add("flips");
+            foreach (DataGridViewRow row in flipsGridView.Rows)
+            {
+                if (row.Cells[0].Value is null)
+                    break;
 
+                string s = "";
+                for (int i = 0; i < row.Cells.Count; i++)
+                {
+                    s = s + row.Cells[i].Value.ToString() + ",";
+                }
+                settings.Add(s);
+            }
 
             File.WriteAllLines("settings.stg", settings.ToArray());
         }
@@ -210,6 +247,7 @@ namespace Runescraper_v5._13
             update_btn.Text = "Updating...";
             List<Item> new_prices = _scraper.refresh_items();
             List<Item> display_list = new List<Item>();
+            List<Item> flip_display_list = new List<Item>();
             foreach(DataGridViewRow row in itemGridView.Rows)
             {
                 var name = row.Cells[0].Value;
@@ -231,13 +269,40 @@ namespace Runescraper_v5._13
                         break;
                     }
                 }
+            }
+            foreach(DataGridViewRow row in flipsGridView.Rows)
+            {
+                var name = row.Cells[0].Value;
 
+                foreach(Item item in this._flips)
+                {
+                    if(item.name.Equals(name))
+                    {
+                        foreach(Item new_item in new_prices)
+                        {
+                            if(new_item.name.Equals(item.name))
+                            {
+                                item.low = new_item.low;
+                                item.high = new_item.high;
+                                item.volume = new_item.volume;
+                                item.limit = new_item.limit;
+                                break;
+                            }
+                        }
+                        flip_display_list.Add(item);
+                    }
+                }
             }
 
             itemGridView.Rows.Clear();
             foreach (Item item in display_list)
             {
                 itemGridView.Rows.Add(item.name, item.low, item.high, item.volume, item.limit, item.getCost(), item.getMargin(), item.getROI(), item.getProfit());
+            }
+            flipsGridView.Rows.Clear();
+            foreach (Item item in flip_display_list)
+            {
+                flipsGridView.Rows.Add(item.name, item.low, item.high, item.init_low, item.init_high, item.getMargin(), item.init_margin, item.getProfit(), item.init_profit);
             }
 
             update_btn.Text = "Update Prices";
@@ -281,6 +346,53 @@ namespace Runescraper_v5._13
                 }
             }
             add_btn.Text = "Add Item";
+        }
+
+        private void add_flip_btn_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in itemGridView.Rows)
+            {
+                if (row.Selected)
+                {
+                    foreach (Item item in this._items)
+                    {
+                        if (item.name.Equals(row.Cells[0].Value))
+                        {
+                            this._flips.Add(item);
+                            item.init_low = item.low;
+                            item.init_high = item.high;
+                            item.init_margin = item.getMargin();
+                            item.init_profit = item.getProfit();
+                            flipsGridView.Rows.Add(item.name, item.low, item.high, item.init_low, item.init_high, item.getMargin(), item.init_margin, item.getProfit(), item.init_profit);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void remove_flip_btn_Click(object sender, EventArgs e)
+        {
+            List<DataGridViewRow> rows_to_remove = new List<DataGridViewRow>();
+            foreach (DataGridViewRow row in flipsGridView.Rows)
+            {
+                if (row.Selected)
+                {
+                    foreach (Item item in this._flips)
+                    {
+                        if (item.name.Equals(row.Cells[0].Value))
+                        {
+                            this._flips.Remove(item);
+                            rows_to_remove.Add(row);
+                            break;
+                        }
+                    }
+                }
+            }
+            foreach(DataGridViewRow row in rows_to_remove)
+            {
+                flipsGridView.Rows.Remove(row);
+            }
         }
     }
 }
