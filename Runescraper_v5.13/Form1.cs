@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -11,6 +12,7 @@ using System.Windows.Forms;
 
 namespace Runescraper_v5._13
 {
+
     public partial class Form1 : Form
     {
         Scraper _scraper;
@@ -50,7 +52,7 @@ namespace Runescraper_v5._13
                 if (line == "" || line == "flips\r")
                     break;
                 string[] vals = line.Split(',');
-                itemGridView.Rows.Add(vals[0], vals[1], vals[2], vals[3], vals[4], vals[5], vals[6], vals[7], vals[8]);
+                itemGridView.Rows.Add(vals[0], vals[1], vals[2], vals[3], vals[4], vals[5], vals[6]);
 
                 Item item = new Item();
                 item.name = vals[0];
@@ -87,6 +89,12 @@ namespace Runescraper_v5._13
         {
             scrape_btn.Text = "Scraping...";
             this._items = this._scraper.refresh_items();
+            this._items = filter_items();
+            this.itemGridView.Rows.Clear();
+            foreach(Item item in this._items)
+            {
+                this.itemGridView.Rows.Add(item.name, item.low, item.high, item.limit, item.volume, item.getMargin(), item.getProfit());
+            }
             scrape_btn.Text = "Scrape";
         }
 
@@ -129,20 +137,6 @@ namespace Runescraper_v5._13
             }
 
             return filtered_items;
-        }
-
-        private void apply_Click(object sender, EventArgs e)
-        {
-            apply_btn.Text = "Applying...";
-            itemGridView.Rows.Clear();
-
-            var fitems = filter_items();
-            foreach(Item item in fitems)
-            {
-                itemGridView.Rows.Add(item.name, item.low, item.high, item.volume, item.limit, item.getCost(), item.getMargin(), item.getROI(), item.getProfit());
-            }
-
-            apply_btn.Text = "Apply";
         }
 
 
@@ -213,21 +207,32 @@ namespace Runescraper_v5._13
             File.WriteAllLines("settings.stg", settings.ToArray());
         }
 
+        private bool alreadyFlipping(Item item)
+        {
+            foreach(Item currItem in this._flips)
+            {
+                if (currItem.name.Equals(item.name))
+                    return true;
+            }
+            return false;
+        }
+
         private void suggest_items_btn_Click(object sender, EventArgs e)
         {
             suggest_item_btn.Text = "Suggesting...";
+            cleanse_items();
             var fitems = new List<Item>(this._items);
             Int32.TryParse(cash_stk_tbox.Text, out int cash_stk);
             List<Item> chosen_items = new List<Item>();
 
             fitems.Sort();
 
-            while (cash_stk >= 0 && fitems.Count > 0)
+            while (cash_stk >= 0 && fitems.Count > 0 && chosen_items.Count + this._flips.Count < 8)
             {
                 Item item = fitems[0];
                 fitems.Remove(item);
 
-                if (cash_stk - item.getCost() > 0)
+                if (cash_stk - item.getCost() > 0 && !alreadyFlipping(item) && this._scraper.checkPricePercentile(item))
                 {
                     cash_stk = (int)(cash_stk - item.getCost());
                     chosen_items.Add(item);
@@ -237,7 +242,7 @@ namespace Runescraper_v5._13
             itemGridView.Rows.Clear();
             foreach (Item item in chosen_items)
             {
-                itemGridView.Rows.Add(item.name, item.low, item.high, item.volume, item.limit, item.getCost(), item.getMargin(), item.getROI(), item.getProfit());
+                itemGridView.Rows.Add(item.name, item.low, item.high, item.limit, item.volume, item.getMargin(), item.getProfit());
             }
             suggest_item_btn.Text = "Suggest Items";
         }
@@ -246,8 +251,28 @@ namespace Runescraper_v5._13
         {
             update_btn.Text = "Updating...";
             List<Item> new_prices = _scraper.refresh_items();
+
+            //Update current flips
+            string userProfile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+            String itemids = File.ReadAllText(userProfile + "/.runelite/FlipAssistant_FlipIDs.txt");
+
+            flipsGridView.Rows.Clear();
+            foreach (string line in itemids.Split('\n'))
+            {
+                foreach (Item item in new_prices)
+                {
+                    if (item.ID.ToString().Equals(line))
+                    {
+                        flipsGridView.Rows.Add(item.name, item.low, item.high, item.historical_data[item.price_percentile], item.historical_data[item.historical_data.Count - item.price_percentile],
+                            item.getMargin(), item.getExpectedMargin(), item.getProfit(), item.getExpectedProfit());
+                        break;
+                    }
+                }
+            }
+
             List<Item> display_list = new List<Item>();
             List<Item> flip_display_list = new List<Item>();
+
             foreach(DataGridViewRow row in itemGridView.Rows)
             {
                 var name = row.Cells[0].Value;
@@ -262,6 +287,8 @@ namespace Runescraper_v5._13
                                 item.low = new_item.low;
                                 item.high = new_item.high;
                                 item.volume = new_item.volume;
+                                item.day_avg_buy = new_item.day_avg_buy;
+                                item.day_avg_sell = new_item.day_avg_sell;
                                 break;
                             }
                         }
@@ -286,6 +313,8 @@ namespace Runescraper_v5._13
                                 item.high = new_item.high;
                                 item.volume = new_item.volume;
                                 item.limit = new_item.limit;
+                                item.day_avg_buy = new_item.day_avg_buy;
+                                item.day_avg_sell = new_item.day_avg_sell;
                                 break;
                             }
                         }
@@ -297,23 +326,19 @@ namespace Runescraper_v5._13
             itemGridView.Rows.Clear();
             foreach (Item item in display_list)
             {
-                itemGridView.Rows.Add(item.name, item.low, item.high, item.volume, item.limit, item.getCost(), item.getMargin(), item.getROI(), item.getProfit());
-            }
-            flipsGridView.Rows.Clear();
-            foreach (Item item in flip_display_list)
-            {
-                flipsGridView.Rows.Add(item.name, item.low, item.high, item.init_low, item.init_high, item.getMargin(), item.init_margin, item.getProfit(), item.init_profit);
+                itemGridView.Rows.Add(item.name, item.low, item.high, item.limit, item.volume, item.getMargin(), item.getProfit());
             }
 
             update_btn.Text = "Update Prices";
         }
 
-        private void cleanse_btn_Click(object sender, EventArgs e)
+        private void cleanse_items()
         {
-            cleanse_btn.Text = "Cleansing...";
             List<Item> removable = new List<Item>();
+            int i = 0;
             foreach(Item item in this._items)
             {
+                i = i + 1;
                 if(!this._scraper.isSafe(item))
                 {
                     removable.Add(item);
@@ -328,9 +353,8 @@ namespace Runescraper_v5._13
             itemGridView.Rows.Clear();
             foreach (Item item in this._items)
             {
-                itemGridView.Rows.Add(item.name, item.low, item.high, item.volume, item.limit, item.getCost(), item.getMargin(), item.getROI(), item.getProfit());
+                itemGridView.Rows.Add(item.name, item.low, item.high, item.limit, item.volume, item.getMargin(), item.getProfit());
             }
-            cleanse_btn.Text = "Cleanse Unsafe Items";
         }
 
         private void add_btn_Click(object sender, EventArgs e)
@@ -341,7 +365,7 @@ namespace Runescraper_v5._13
             {
                 if (item.name.ToLower().Equals(iname.ToLower()))
                 {
-                    itemGridView.Rows.Add(item.name, item.low, item.high, item.volume, item.limit, item.getCost(), item.getMargin(), item.getROI(), item.getProfit());
+                    itemGridView.Rows.Add(item.name, item.low, item.high, item.limit, item.volume, item.getMargin(), item.getProfit());
                     break;
                 }
             }
@@ -358,12 +382,14 @@ namespace Runescraper_v5._13
                     {
                         if (item.name.Equals(row.Cells[0].Value))
                         {
+                            this._scraper.checkPricePercentile(item);
                             this._flips.Add(item);
                             item.init_low = item.low;
                             item.init_high = item.high;
                             item.init_margin = item.getMargin();
                             item.init_profit = item.getProfit();
-                            flipsGridView.Rows.Add(item.name, item.low, item.high, item.init_low, item.init_high, item.getMargin(), item.init_margin, item.getProfit(), item.init_profit);
+                            flipsGridView.Rows.Add(item.name, item.low, item.high, item.historical_data[item.price_percentile], item.historical_data[item.historical_data.Count - item.price_percentile],
+                                item.getMargin(), item.getExpectedMargin(), item.getProfit(), item.getExpectedProfit()); 
                             break;
                         }
                     }
@@ -394,5 +420,7 @@ namespace Runescraper_v5._13
                 flipsGridView.Rows.Remove(row);
             }
         }
+
+
     }
 }
