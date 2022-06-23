@@ -117,11 +117,17 @@ namespace Runescraper_v5._13
                 max_buy = int.MaxValue;
             if (max_sell == 0)
                 max_sell = int.MaxValue;
+            if (min_margin_tbox.Text.Replace("\r","").Equals(""))
+                min_margin = -System.Int32.MaxValue;
+            if (min_profit_tbox.Text.Replace("\r", "").Equals(""))
+                min_profit = -System.Int32.MaxValue;
 
             List<Item> filtered_items = new List<Item>();
             List<Item> removable_items = new List<Item>();
             foreach (Item item in this._items)
             {
+                if (item.ID == 383)
+                    Console.WriteLine("test");
                 if (item.low >= min_buy && item.low <= max_buy && item.high >= min_sell && item.high <= max_sell && item.volume >= min_volume && item.getMargin() >= min_margin && item.getProfit() >= min_profit)
                 {
                     filtered_items.Add(item);
