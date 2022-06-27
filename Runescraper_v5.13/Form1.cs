@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace Runescraper_v5._13
 {
 
@@ -19,37 +20,46 @@ namespace Runescraper_v5._13
         VirtualController vc = new VirtualController();
         List<Item> _items;
         List<Item> _flips;
-        BackgroundWorker scraperBGW = new BackgroundWorker();
         public Form1()
         {
             InitializeComponent();
+            vc.sendItem += UpdateList;
+            vc.scrapeFinished += finishScrape;
+            vc.UpdateMinBuy += updateMinBuyBox;
+            vc.UpdateMaxBuy += updateMaxBuyBox;
+            vc.UpdateMinSell += updateMinSellBox;
+            vc.UpdateMaxSell += updateMaxSellBox;
+            vc.UpdateMinVol += updateMinVolBox;
+            vc.UpdateMinMargin += updateMinMarginBox;
+            vc.UpdateMinProfit += updateMinProfitBox;
+            vc.UpdateCashStack += updateCashStackBox;
 
-            InitializeBGWs();
-            //signals here
-            
+            UpdateBoxes();
         }
 
-        private void InitializeBGWs()
+        
+        private void UpdateList(Item item)
         {
-            scraperBGW.DoWork += new DoWorkEventHandler(vc.scrapeDB);
-            scraperBGW.RunWorkerCompleted += new RunWorkerCompletedEventHandler(this.finishScrape);
+            itemGridView.Rows.Add(item.name, item.low, item.high, item.limit, item.volume, item.getMargin(), item.getProfit());
         }
 
-      
-
+        public void UpdateBoxes()
+        {
+            vc.SendSettings();
+        }
 
         private void scrape_btn_Click_1(object sender, EventArgs e)
         {
             scrape_btn.Enabled = false;
             scrape_btn.Text = "Scraping...";
-            scraperBGW.RunWorkerAsync();
+            itemGridView.Rows.Clear();
+            vc.scrapeDB();
         }
 
-        private void finishScrape(object sender, EventArgs e)
+        private void finishScrape()
         {
             scrape_btn.Text = "Scrape";
             scrape_btn.Enabled = true;
-
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -57,7 +67,43 @@ namespace Runescraper_v5._13
             this.itemGridView.Rows.Clear();
         }
 
-       
+       public void updateMinBuyBox(string MinBuySetting)
+        {
+            this.min_buy_tbox.Text = MinBuySetting;
+        }
+
+        public void updateMaxBuyBox(string MaxBuySetting)
+        {
+            this.max_buy_tbox.Text = MaxBuySetting;
+        }
+
+        public void updateMinSellBox(string MinSellSetting)
+        {
+            this.min_sell_tbox.Text = MinSellSetting;
+        }
+
+        public void updateMaxSellBox(string MaxSellSetting)
+        {
+            this.max_sell_tbox.Text = MaxSellSetting;
+        }
+
+        public void updateMinVolBox(string MinVolSetting)
+        {
+            this.min_volume_tbox.Text = MinVolSetting;
+        }
+        public void updateMinMarginBox(string MinMarginSetting)
+        {
+            this.min_margin_tbox.Text = MinMarginSetting;
+        }
+
+        public void updateMinProfitBox(string MinProfitSetting)
+        {
+            this.min_profit_tbox.Text = MinProfitSetting;
+        }
+        public void updateCashStackBox(string CashStackSetting)
+        {
+            this.cash_stk_tbox.Text = CashStackSetting;
+        }
 
 
         private void delete_items_btn_Click(object sender, EventArgs e)

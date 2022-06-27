@@ -47,6 +47,9 @@ namespace Runescraper_v5._13
         public delegate void ItemSender(Item item);
         public event ItemSender sendItem;
 
+        public delegate void ScrapeFinishHandler();
+        public event ScrapeFinishHandler scrapeFinished;
+
         //init
         /// <summary>
         /// 
@@ -76,7 +79,7 @@ namespace Runescraper_v5._13
                 minProfitSetting = settings[6];
                 cashStack = settings[7];
 
-              //  UpdateMinBuy(minBuySetting);
+                
 
             }
             catch
@@ -126,15 +129,24 @@ namespace Runescraper_v5._13
         }
         //
 
-        public void scrapeDB(object sender, DoWorkEventArgs e)
+        public void scrapeDB()
         {
             this.itemsTable = this.scraper.refresh_items();
             this.itemsTable = filter_items();
             
             foreach (Item item in this.itemsTable)
             {
-               // sendItem(item);
+                sendItem(item);
             }
+
+            scrapeFinished();
+        }
+
+        public void SendSettings()
+        {
+            UpdateMinBuy(minBuySetting);
+            UpdateMaxBuy(maxBuySetting);
+
         }
 
         private List<Item> filter_items()
