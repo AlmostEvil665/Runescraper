@@ -82,7 +82,6 @@ namespace Runescraper_v5._13
         public List<Item> refresh_items()
         {
             DownloadFile(this.URL + this.EP_latest, "item_db.txt");
-            DownloadFile(this.URL + this.EP_one_d, "oneday_db.txt");
             DownloadFile(this.URL + this.EP_mapping, "item_mapping.txt");
             DownloadFile(this.URL + this.EP_volume, "item_volume.txt");
             DownloadFile("https://chisel.weirdgloop.org/gazproj/gazbot/os_dump.json", "ge.tmp");
@@ -106,22 +105,10 @@ namespace Runescraper_v5._13
                         case "id":
                             Int32.TryParse(vals[i + 1], out item.ID);
                             break;
-                        case "examine":
-                            item.examine = vals[i + 1];
-                            break;
-                        case "members":
-                            item.members = vals[i + 1];
-                            break;
-                        case "lowalch":
-                            Int32.TryParse(vals[i + 1], out item.lowalch);
-                            break;
                         case "limit":
                             Int32.TryParse(vals[i + 1], out item.limit);
                             break;
                         case "value":
-                            break;
-                        case "highalch":
-                            Int32.TryParse(vals[i + 1], out item.highalch);
                             break;
                         case "icon":
                             item.icon = vals[i + 1];
@@ -157,9 +144,7 @@ namespace Runescraper_v5._13
                 }
                 Int32.TryParse(vals[0], out item.ID);
                 Int32.TryParse(vals[2], out item.high);
-                Int32.TryParse(vals[4], out item.highTime);
                 Int32.TryParse(vals[6], out item.low);
-                Int32.TryParse(vals[8], out item.lowTime);
 
                 items[item.ID.ToString()] = item;
             }
@@ -196,28 +181,6 @@ namespace Runescraper_v5._13
                 items[item.ID.ToString()] = item;
             }
 
-
-            string day_mapping = System.IO.File.ReadAllText("oneday_db.txt");
-            day_mapping = day_mapping.Replace("{\"data\":", "").Replace("[{", "").Replace("},", "\n").Replace("{", "").Replace(":", "").Replace("\"\"", "\"").Replace(",", "");
-            string[] day_arr = day_mapping.Split('\n');
-
-            // Parse each mapping into its respective mapping
-            foreach (string curr in day_arr)
-            {
-                var vals = curr.Split('\"');
-
-                try
-                {
-                    var item = items[vals[1]];
-
-                    Int32.TryParse(vals[7], out item.day_avg_sell);
-                    Int32.TryParse(vals[3], out item.day_avg_buy);
-                }
-                catch (Exception e)
-                {
-
-                }
-            }
 
 
             return new List<Item>(items.Values);
