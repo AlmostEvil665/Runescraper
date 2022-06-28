@@ -104,6 +104,7 @@ namespace Runescraper_v5._13
             this.dump_profit});
             this.itemGridView.Location = new System.Drawing.Point(12, 284);
             this.itemGridView.Name = "itemGridView";
+            this.itemGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.itemGridView.Size = new System.Drawing.Size(1050, 308);
             this.itemGridView.TabIndex = 1;
             // 
