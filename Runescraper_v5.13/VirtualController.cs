@@ -16,9 +16,9 @@ namespace Runescraper_v5._13
         List<Item> flipsTable;
         Settings stg = new Settings();
 
-
-
         BackgroundWorker SuggestWorker = new BackgroundWorker();
+        BackgroundWorker RuneliteWorker = new BackgroundWorker();
+        BackgroundWorker ScrapeWorker = new BackgroundWorker();
 
         public delegate void MinBuyUpdater(int MinBuySetting);
         public event MinBuyUpdater UpdateMinBuy;
@@ -46,11 +46,17 @@ namespace Runescraper_v5._13
         public delegate void ItemSender(Item item);
         public event ItemSender sendItem;
 
-        public delegate void ScrapeFinishHandler();
+        public delegate void FlipSender(List<Item> items);
+        public event FlipSender sendFlip;
+
+        public delegate void ScrapeFinishHandler(List<Item> items);
         public event ScrapeFinishHandler scrapeFinished;
 
         public delegate void SuggestFinishHandler(List<Item> suggestions);
         public event SuggestFinishHandler suggestFinished;
+
+        public delegate void UpdateFinishHandler();
+        public event UpdateFinishHandler updateFinished;
 
         //init
         /// <summary>
@@ -62,10 +68,14 @@ namespace Runescraper_v5._13
             flipsTable = new List<Item>();
             scraper = new Scraper();
 
+            RuneliteWorker.DoWork += scrapeRunelogs;
+            RuneliteWorker.RunWorkerCompleted += finishUpdateItems;
+
+            ScrapeWorker.DoWork += scrapeItems;
+            ScrapeWorker.RunWorkerCompleted += finishScrapingItems;
+            
             SuggestWorker.DoWork += SuggestItems;
             SuggestWorker.RunWorkerCompleted += FinishSuggestions;
-            
-
 
             string[] settings = new string[0];
             try
@@ -135,12 +145,12 @@ namespace Runescraper_v5._13
 
         }
 
-        public Settings getStg()
+        private void finishScrapingItems(object sender, RunWorkerCompletedEventArgs e)
         {
-            return stg;
+            scrapeFinished(this.itemsTable);
         }
 
-        public void scrapeDB()
+        private void scrapeItems(object sender, DoWorkEventArgs e)
         {
             this.itemsTable = this.scraper.refresh_items();
             this.itemsTable = filter_items();
@@ -150,7 +160,16 @@ namespace Runescraper_v5._13
                 sendItem(item);
             }
 
-            scrapeFinished();
+        }
+
+        public Settings getStg()
+        {
+            return stg;
+        }
+
+        public void scrapeDB()
+        {
+            ScrapeWorker.RunWorkerAsync();
         }
 
         public void SendSettings()
@@ -203,10 +222,12 @@ namespace Runescraper_v5._13
 
             return filtered_items;
         }
+        
         public void StartSuggesting()
         {
             SuggestWorker.RunWorkerAsync();
         }
+        
         private void SuggestItems(object sender, DoWorkEventArgs e)
         {
             cleanse_items();
@@ -272,4 +293,35 @@ namespace Runescraper_v5._13
         }
 
     } 
+
+        /// <summary>
+        /// Instructs the Runeworker to begin working
+        /// </summary>
+        public void updateItems()
+        {
+            RuneliteWorker.RunWorkerAsync();
+        }
+        private void scrapeRunelogs(object sender, DoWorkEventArgs e)
+        {
+            List<Item> logFlips = this.scraper.grabGeLogs();
+            e.Result = logFlips;
+        }
+
+        private void finishUpdateItems(object sender, RunWorkerCompletedEventArgs e)
+        {
+            List<Item> flips = ((List<Item>) e.Result);
+            sendFlip(flips);
+
+            foreach(Item flip in flips)
+            {
+                flipsTable.Add(flip);
+            }
+
+            updateFinished();
+        }
+
+
+
+    }
+
 }

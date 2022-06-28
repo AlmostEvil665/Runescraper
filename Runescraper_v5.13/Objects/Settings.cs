@@ -60,6 +60,7 @@ namespace Runescraper_v5._13.Objects
 
         public void setMinBuy(string value)
         {
+            value = convertUnits(value);
             if (value.Equals("\r"))
                 minBuy = -System.Int32.MaxValue;
             else
@@ -69,6 +70,7 @@ namespace Runescraper_v5._13.Objects
 
         public void setMaxBuy(string value)
         {
+            value = convertUnits(value);
             if (value.Equals("\r"))
                 maxBuy = System.Int32.MaxValue;
             else
@@ -77,6 +79,7 @@ namespace Runescraper_v5._13.Objects
 
         public void setMinSell(string value)
         {
+            value = convertUnits(value);
             if (value.Equals("\r"))
                 minSell = -System.Int32.MaxValue;
             else
@@ -85,6 +88,7 @@ namespace Runescraper_v5._13.Objects
 
         public void setMaxSell(string value)
         {
+            value = convertUnits(value);
             if (value.Equals("\r"))
                 maxSell = System.Int32.MaxValue;
             else
@@ -93,6 +97,7 @@ namespace Runescraper_v5._13.Objects
 
         public void setMinVol(string value)
         {
+            value = convertUnits(value);
             if (value.Equals("\r"))
                 minVol = -System.Int32.MaxValue;
             else 
@@ -100,6 +105,7 @@ namespace Runescraper_v5._13.Objects
         }
         public void setMinMargin(string value)
         {
+            value = convertUnits(value);
             if (value.Equals("\r"))
                 minMargin = -System.Int32.MaxValue;
             else
@@ -108,6 +114,7 @@ namespace Runescraper_v5._13.Objects
 
         public void setMinProfit(string value)
         {
+            value = convertUnits(value);
             if (value.Equals("\r"))
                 minProfit = -System.Int32.MaxValue;
             else
@@ -116,10 +123,16 @@ namespace Runescraper_v5._13.Objects
 
         public void setCashStack(string value)
         {
+            value = convertUnits(value);
             if (value.Equals("\r"))
                 cashStack = System.Int32.MaxValue;
             else
                 Int32.TryParse(value, out cashStack);
+        }
+
+        public string convertUnits(string value)
+        {
+            return value.ToLower().Replace("k", "000").Replace("m", "000000").Replace("b", "000000000");
         }
     }
 }
