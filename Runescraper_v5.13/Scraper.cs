@@ -223,6 +223,56 @@ namespace Runescraper_v5._13
             return new List<Item>(items.Values);
         }
 
+        internal List<Item> grabGeLogs()
+        {
+            List<Item> items = refresh_items();
+
+            String logDir = "C:/Users/" + Environment.UserName + "/.runelite/exchange-logger/exchange.log";
+            String log_str = File.ReadAllText(logDir);
+            Item[] flips = new Item[8];
+
+            foreach(String line in log_str.Split('\n'))
+            {
+                if (line.Equals(""))
+                    break;
+                var data = line.Replace("{", "").Replace("}", "").Replace("\"", "").Replace(":",",").Split(',');
+
+                String state = data[7];
+                Int32.TryParse(data[9], out int slot);
+                Int32.TryParse(data[11], out int id);
+
+                if (state.Equals("EMPTY") || state.Equals("CANCELLED_BUY") || state.Equals("CANCELLED_SELL") 
+                    || state.Equals("SOLD") || state.Equals("BOUGHT") )
+                {
+                    flips[slot] = null;
+                    continue;
+                }
+                if (state.Equals("BUYING") || state.Equals("SELLING"))
+                {
+                    Item item = new Item();
+                    item.ID = id;
+                    flips[slot] = item;
+                }
+            }
+
+            List<Item> flipList = new List<Item>();
+            foreach(Item item in flips)
+            {
+                if (!(item is null))
+                {
+                    foreach(Item curr in items)
+                    {
+                        if (curr.ID == item.ID)
+                        {
+                            checkPricePercentile(curr);
+                            flipList.Add(curr);
+                        }
+                    }
+                }
+            }
+            return flipList;
+        }
+
         internal bool isSafe(Item item)
         {
             DownloadFile("https://api.weirdgloop.org/exchange/history/osrs/latest?id=" + item.ID, "item.tmp");
