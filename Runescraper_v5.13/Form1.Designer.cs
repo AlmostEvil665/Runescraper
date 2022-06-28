@@ -381,6 +381,7 @@ namespace Runescraper_v5._13
             this.init_profit});
             this.flipsGridView.Location = new System.Drawing.Point(10, 30);
             this.flipsGridView.Name = "flipsGridView";
+            this.flipsGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.flipsGridView.Size = new System.Drawing.Size(1052, 219);
             this.flipsGridView.TabIndex = 28;
             // 

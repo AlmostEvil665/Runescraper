@@ -68,8 +68,6 @@ namespace Runescraper_v5._13
         {
             foreach (Item item in items)
             {
-                item.init_margin = item.getMargin();
-                item.init_profit = item.getProfit();
                 flipsGridView.Rows.Add(item.name, item.low, item.high, item.historical_data[item.price_percentile], item.historical_data[item.historical_data.Count - item.price_percentile],
                     item.getMargin(), item.getExpectedMargin(), item.getProfit(), item.getExpectedProfit());
             }
@@ -265,10 +263,6 @@ namespace Runescraper_v5._13
                         {
                             this._scraper.checkPricePercentile(item);
                             this._flips.Add(item);
-                            item.init_low = item.low;
-                            item.init_high = item.high;
-                            item.init_margin = item.getMargin();
-                            item.init_profit = item.getProfit();
                             flipsGridView.Rows.Add(item.name, item.low, item.high, item.historical_data[item.price_percentile], item.historical_data[item.historical_data.Count - item.price_percentile],
                                 item.getMargin(), item.getExpectedMargin(), item.getProfit(), item.getExpectedProfit()); 
                             break;
