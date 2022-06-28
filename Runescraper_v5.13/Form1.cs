@@ -10,139 +10,94 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace Runescraper_v5._13
 {
 
     public partial class Form1 : Form
     {
         Scraper _scraper;
+        VirtualController vc = new VirtualController();
         List<Item> _items;
         List<Item> _flips;
         public Form1()
         {
             InitializeComponent();
-            _items = new List<Item>();
-            _flips = new List<Item>();
-            _scraper = new Scraper();
-            string[] settings = new string[0];
-            try
-            {
-                string stg_data = File.ReadAllText("settings.stg");
-                settings = stg_data.Split('\n');
-
-                min_buy_tbox.Text = settings[0];
-                max_buy_tbox.Text = settings[1];
-                min_sell_tbox.Text = settings[2];
-                max_sell_tbox.Text = settings[3];
-                min_volume_tbox.Text = settings[4];
-                min_margin_tbox.Text = settings[5];
-                min_profit_tbox.Text = settings[6];
-                cash_stk_tbox.Text = settings[7];
-            }
-            catch
-            {
-
-            }
-            int i = 8;
-#pragma warning disable CS1717 // Assignment made to same variable
-            for (i = i; i < settings.Length; i++) //Assignment made to same variable
-
-            {
-                string line = settings[i];
-                if (line == "" || line == "flips\r")
-                    break;
-                string[] vals = line.Split(',');
-                itemGridView.Rows.Add(vals[0], vals[1], vals[2], vals[3], vals[4], vals[5], vals[6]);
-
-                Item item = new Item();
-                item.name = vals[0];
-                Int32.TryParse(vals[1], out item.low);
-                Int32.TryParse(vals[2], out item.high);
-                Int32.TryParse(vals[3], out item.volume);
-                Int32.TryParse(vals[4], out item.limit);
-                _items.Add(item);
-            }
-            for (i = i + 1; i < settings.Length; i++)
-            {
-                string line = settings[i];
-                if (line == "")
-                    break;
-                string[] vals = line.Split(',');
-                flipsGridView.Rows.Add(vals[0], vals[1], vals[2], vals[3], vals[4], vals[5], vals[6], vals[7], vals[8]);
-
-                Item item = new Item();
-                item.name = vals[0];
-                Int32.TryParse(vals[1], out item.low);
-                Int32.TryParse(vals[2], out item.high);
-                Int32.TryParse(vals[3], out item.init_low);
-                Int32.TryParse(vals[4], out item.init_high);
-                Int32.TryParse(vals[6], out item.init_margin);
-                item.init_profit = long.Parse(vals[8]);
-                _flips.Add(item);
-            }
-            #pragma warning restore CS1717 // Assignment made to same variable
+            vc.sendItem += UpdateList;
+            vc.scrapeFinished += finishScrape;
+            vc.UpdateMinBuy += updateMinBuyBox;
+            vc.UpdateMaxBuy += updateMaxBuyBox;
+            vc.UpdateMinSell += updateMinSellBox;
+            vc.UpdateMaxSell += updateMaxSellBox;
+            vc.UpdateMinVol += updateMinVolBox;
+            vc.UpdateMinMargin += updateMinMarginBox;
+            vc.UpdateMinProfit += updateMinProfitBox;
+            vc.UpdateCashStack += updateCashStackBox;
+            UpdateBoxes();
         }
 
 
+      
+        private void UpdateList(Item item)
+        {
+            itemGridView.Rows.Add(item.name, item.low, item.high, item.limit, item.volume, item.getMargin(), item.getProfit());
+        }
+
+        public void UpdateBoxes()
+        {
+            vc.SendSettings();
+        }
 
         private void scrape_btn_Click_1(object sender, EventArgs e)
         {
             scrape_btn.Text = "Scraping...";
-            this._items = this._scraper.refresh_items();
-            this._items = filter_items();
-            this.itemGridView.Rows.Clear();
-            foreach(Item item in this._items)
-            {
-                this.itemGridView.Rows.Add(item.name, item.low, item.high, item.limit, item.volume, item.getMargin(), item.getProfit());
-            }
+            scrape_btn.Enabled = false;
+            itemGridView.Rows.Clear();
+            vc.scrapeDB();
+        }
+
+        private void finishScrape()
+        {
             scrape_btn.Text = "Scrape";
+            scrape_btn.Enabled = true;
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+       public void updateMinBuyBox(int MinBuySetting)
         {
-
+            this.min_buy_tbox.Text = MinBuySetting.ToString();
         }
 
-        private List<Item> filter_items()
+        public void updateMaxBuyBox(int MaxBuySetting)
         {
-            Int32.TryParse(min_buy_tbox.Text, out int min_buy);
-            Int32.TryParse(max_buy_tbox.Text, out int max_buy);
-            Int32.TryParse(min_sell_tbox.Text, out int min_sell);
-            Int32.TryParse(max_sell_tbox.Text, out int max_sell);
-            Int32.TryParse(min_volume_tbox.Text, out int min_volume);
-            Int32.TryParse(min_margin_tbox.Text, out int min_margin);
-            Int32.TryParse(min_profit_tbox.Text, out int min_profit);
+            this.max_buy_tbox.Text = MaxBuySetting.ToString();
+        }
 
-            if (max_buy == 0)
-                max_buy = int.MaxValue;
-            if (max_sell == 0)
-                max_sell = int.MaxValue;
-            if (min_margin_tbox.Text.Replace("\r","").Equals(""))
-                min_margin = -System.Int32.MaxValue;
-            if (min_profit_tbox.Text.Replace("\r", "").Equals(""))
-                min_profit = -System.Int32.MaxValue;
+        public void updateMinSellBox(int MinSellSetting)
+        {
+            this.min_sell_tbox.Text = MinSellSetting.ToString();
+        }
 
-            List<Item> filtered_items = new List<Item>();
-            List<Item> removable_items = new List<Item>();
-            foreach (Item item in this._items)
-            {
-                if (item.ID == 383)
-                    Console.WriteLine("test");
-                if (item.low >= min_buy && item.low <= max_buy && item.high >= min_sell && item.high <= max_sell && item.volume >= min_volume && item.getMargin() >= min_margin && item.getProfit() >= min_profit)
-                {
-                    filtered_items.Add(item);
-                } else
-                {
-                    removable_items.Add(item);
-                }
-            }
+        public void updateMaxSellBox(int MaxSellSetting)
+        {
+            this.max_sell_tbox.Text = MaxSellSetting.ToString();
+        }
 
-            foreach (Item item in removable_items)
-            {
-                this._items.Remove(item);
-            }
+        public void updateMinVolBox(int MinVolSetting)
+        {
+            this.min_volume_tbox.Text = MinVolSetting.ToString();
+        }
+        public void updateMinMarginBox(int MinMarginSetting)
+        {
+            this.min_margin_tbox.Text = MinMarginSetting.ToString();
+        }
 
-            return filtered_items;
+        public void updateMinProfitBox(int MinProfitSetting)
+        {
+            this.min_profit_tbox.Text = MinProfitSetting.ToString();
+        }
+        public void updateCashStackBox(int CashStackSetting)
+        {
+            this.cash_stk_tbox.Text = CashStackSetting.ToString();
         }
 
 
@@ -223,6 +178,11 @@ namespace Runescraper_v5._13
             return false;
         }
 
+        /// <summary>
+        /// Suggest items button click method
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void suggest_items_btn_Click(object sender, EventArgs e)
         {
             suggest_item_btn.Text = "Suggesting...";
@@ -378,6 +338,11 @@ namespace Runescraper_v5._13
             add_btn.Text = "Add Item";
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void add_flip_btn_Click(object sender, EventArgs e)
         {
             foreach (DataGridViewRow row in itemGridView.Rows)
@@ -427,6 +392,54 @@ namespace Runescraper_v5._13
             }
         }
 
+        private void cash_stk_tbox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                suggest_items_btn_Click(this, new EventArgs());
+            }
+        }
 
+        private void min_buy_tbox_TextChanged(object sender, EventArgs e)
+        {
+            vc.getStg().setMinBuy(min_buy_tbox.Text);
+        }
+
+        private void max_buy_tbox_TextChanged(object sender, EventArgs e)
+        {
+            vc.getStg().setMaxBuy(max_buy_tbox.Text);
+
+        }
+
+        private void min_sell_tbox_TextChanged(object sender, EventArgs e)
+        {
+            vc.getStg().setMinSell(min_sell_tbox.Text);
+
+        }
+
+        private void max_sell_tbox_TextChanged(object sender, EventArgs e)
+        {
+            vc.getStg().setMaxBuy(max_buy_tbox.Text);
+        }
+
+        private void min_volume_tbox_TextChanged(object sender, EventArgs e)
+        {
+            vc.getStg().setMinVol(min_volume_tbox.Text);
+        }
+
+        private void min_margin_tbox_TextChanged(object sender, EventArgs e)
+        {
+            vc.getStg().setMinMargin(min_margin_tbox.Text);
+        }
+
+        private void min_profit_tbox_TextChanged(object sender, EventArgs e)
+        {
+            vc.getStg().setMinProfit(min_profit_tbox.Text);
+        }
+
+        private void cash_stk_tbox_TextChanged(object sender, EventArgs e)
+        {
+            vc.getStg().setCashStack(cash_stk_tbox.Text);
+        }
     }
 }
