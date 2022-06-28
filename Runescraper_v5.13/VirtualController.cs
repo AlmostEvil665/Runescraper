@@ -15,8 +15,10 @@ namespace Runescraper_v5._13
         List<Item> itemsTable;
         List<Item> flipsTable;
         Settings stg = new Settings();
-        
-       
+
+
+
+        BackgroundWorker SuggestWorker = new BackgroundWorker();
 
         public delegate void MinBuyUpdater(int MinBuySetting);
         public event MinBuyUpdater UpdateMinBuy;
@@ -47,6 +49,9 @@ namespace Runescraper_v5._13
         public delegate void ScrapeFinishHandler();
         public event ScrapeFinishHandler scrapeFinished;
 
+        public delegate void SuggestFinishHandler(List<Item> suggestions);
+        public event SuggestFinishHandler suggestFinished;
+
         //init
         /// <summary>
         /// 
@@ -56,10 +61,11 @@ namespace Runescraper_v5._13
             itemsTable = new List<Item>();
             flipsTable = new List<Item>();
             scraper = new Scraper();
+
+            SuggestWorker.DoWork += SuggestItems;
+            SuggestWorker.RunWorkerCompleted += FinishSuggestions;
             
 
-            
-            
 
             string[] settings = new string[0];
             try
@@ -104,7 +110,7 @@ namespace Runescraper_v5._13
                 Int32.TryParse(vals[4], out item.limit);
                 itemsTable.Add(item);
             }
-            for (int i  = j + 1; i < settings.Length; i++)
+            for (int i = j + 1; i < settings.Length; i++)
             {
                 string line = settings[i];
                 if (line == "")
@@ -124,11 +130,11 @@ namespace Runescraper_v5._13
                 Int32.TryParse(vals[4], out item.init_high);
                 Int32.TryParse(vals[5], out item.init_margin);
                 item.init_profit = long.Parse(vals[6]);
-                flipsTable.Add(item); 
+                flipsTable.Add(item);
             }
 
         }
-        
+
         public Settings getStg()
         {
             return stg;
@@ -138,7 +144,7 @@ namespace Runescraper_v5._13
         {
             this.itemsTable = this.scraper.refresh_items();
             this.itemsTable = filter_items();
-            
+
             foreach (Item item in this.itemsTable)
             {
                 sendItem(item);
@@ -172,7 +178,7 @@ namespace Runescraper_v5._13
         {
 
 
-            
+
             List<Item> filtered_items = new List<Item>();
             List<Item> removable_items = new List<Item>();
             foreach (Item item in this.itemsTable)
@@ -197,5 +203,73 @@ namespace Runescraper_v5._13
 
             return filtered_items;
         }
-    }
+        public void StartSuggesting()
+        {
+            SuggestWorker.RunWorkerAsync();
+        }
+        private void SuggestItems(object sender, DoWorkEventArgs e)
+        {
+            cleanse_items();
+            var fitems = new List<Item>(itemsTable);
+
+            List<Item> chosen_items = new List<Item>();
+
+            fitems.Sort();
+
+            while (stg.cashStack >= 0 && fitems.Count > 0 && chosen_items.Count + flipsTable.Count < 8)
+            {
+                Item item = fitems[0];
+                fitems.Remove(item);
+
+                if (stg.cashStack - item.getCost() > 0 && !alreadyFlipping(item) && scraper.checkPricePercentile(item))
+                {
+                    stg.cashStack = (int)(stg.cashStack - item.getCost());
+                    chosen_items.Add(item);
+                }
+
+            }
+
+            e.Result = chosen_items;
+
+            
+            
+
+        }
+
+        private void FinishSuggestions(object sender, RunWorkerCompletedEventArgs e)
+        {
+            List<Item> suggestions = (List<Item>)e.Result;
+            suggestFinished(suggestions);
+        }
+
+        private void cleanse_items()
+        {
+            List<Item> removable = new List<Item>();
+            int i = 0;
+            foreach (Item item in itemsTable)
+            {
+                i = i + 1;
+                if (scraper.isSafe(item))
+                {
+                    removable.Add(item);
+                }
+            }
+
+            foreach (Item item in removable)
+            {
+                itemsTable.Remove(item);
+            }
+        }
+
+        private bool alreadyFlipping(Item item)
+        {
+            foreach (Item currItem in flipsTable)
+            {
+                if (currItem.name.Equals(item.name))
+                    return true;
+            }
+            return false;
+        }
+
+    } 
 }
