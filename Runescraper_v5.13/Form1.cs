@@ -27,6 +27,7 @@ namespace Runescraper_v5._13
             vc.sendItem += AddItem;
             vc.sendFlip += addFlips;
             vc.scrapeFinished += finishScrape;
+            vc.updateFinished += finishUpdate;
             vc.UpdateMinBuy += updateMinBuyBox;
             vc.UpdateMaxBuy += updateMaxBuyBox;
             vc.UpdateMinSell += updateMinSellBox;
@@ -53,6 +54,7 @@ namespace Runescraper_v5._13
         }
 
         private void UpdateList(Item item)
+        { 
             vc.updateFinished += finishUpdate;
             UpdateBoxes();
         }

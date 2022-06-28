@@ -292,7 +292,7 @@ namespace Runescraper_v5._13
             return false;
         }
 
-    } 
+     
 
         /// <summary>
         /// Instructs the Runeworker to begin working
