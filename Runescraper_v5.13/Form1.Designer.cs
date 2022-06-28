@@ -64,19 +64,19 @@ namespace Runescraper_v5._13
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.flipsGridView = new System.Windows.Forms.DataGridView();
-            this.flip_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.flip_low = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.flip_high = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.flip_limit = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.day_avg = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.flip_margin = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dump_margin = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.flip_profit = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.init_profit = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.add_flip_btn = new System.Windows.Forms.Button();
             this.remove_flip_btn = new System.Windows.Forms.Button();
             this.flips_lbl = new System.Windows.Forms.Label();
             this.items_lbl = new System.Windows.Forms.Label();
+            this.flip_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.flip_low = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.flip_high = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.user_action = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.user_price = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.flip_margin = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dump_margin = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.flip_profit = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.init_profit = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.itemGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.flipsGridView)).BeginInit();
             this.SuspendLayout();
@@ -373,8 +373,8 @@ namespace Runescraper_v5._13
             this.flip_name,
             this.flip_low,
             this.flip_high,
-            this.flip_limit,
-            this.day_avg,
+            this.user_action,
+            this.user_price,
             this.flip_margin,
             this.dump_margin,
             this.flip_profit,
@@ -384,52 +384,6 @@ namespace Runescraper_v5._13
             this.flipsGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.flipsGridView.Size = new System.Drawing.Size(1052, 219);
             this.flipsGridView.TabIndex = 28;
-            // 
-            // flip_name
-            // 
-            this.flip_name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.flip_name.HeaderText = "Name";
-            this.flip_name.Name = "flip_name";
-            // 
-            // flip_low
-            // 
-            this.flip_low.HeaderText = "Buy Price";
-            this.flip_low.Name = "flip_low";
-            // 
-            // flip_high
-            // 
-            this.flip_high.HeaderText = "Sell Price";
-            this.flip_high.Name = "flip_high";
-            // 
-            // flip_limit
-            // 
-            this.flip_limit.HeaderText = "Max Buy";
-            this.flip_limit.Name = "flip_limit";
-            // 
-            // day_avg
-            // 
-            this.day_avg.HeaderText = "Min Sell";
-            this.day_avg.Name = "day_avg";
-            // 
-            // flip_margin
-            // 
-            this.flip_margin.HeaderText = "Margin";
-            this.flip_margin.Name = "flip_margin";
-            // 
-            // dump_margin
-            // 
-            this.dump_margin.HeaderText = "Exp Margin";
-            this.dump_margin.Name = "dump_margin";
-            // 
-            // flip_profit
-            // 
-            this.flip_profit.HeaderText = "Profit";
-            this.flip_profit.Name = "flip_profit";
-            // 
-            // init_profit
-            // 
-            this.init_profit.HeaderText = "Exp Profit";
-            this.init_profit.Name = "init_profit";
             // 
             // add_flip_btn
             // 
@@ -470,6 +424,52 @@ namespace Runescraper_v5._13
             this.items_lbl.Size = new System.Drawing.Size(66, 26);
             this.items_lbl.TabIndex = 32;
             this.items_lbl.Text = "Items";
+            // 
+            // flip_name
+            // 
+            this.flip_name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.flip_name.HeaderText = "Name";
+            this.flip_name.Name = "flip_name";
+            // 
+            // flip_low
+            // 
+            this.flip_low.HeaderText = "Buy Price";
+            this.flip_low.Name = "flip_low";
+            // 
+            // flip_high
+            // 
+            this.flip_high.HeaderText = "Sell Price";
+            this.flip_high.Name = "flip_high";
+            // 
+            // user_action
+            // 
+            this.user_action.HeaderText = "Action";
+            this.user_action.Name = "user_action";
+            // 
+            // user_price
+            // 
+            this.user_price.HeaderText = "User Price";
+            this.user_price.Name = "user_price";
+            // 
+            // flip_margin
+            // 
+            this.flip_margin.HeaderText = "Margin";
+            this.flip_margin.Name = "flip_margin";
+            // 
+            // dump_margin
+            // 
+            this.dump_margin.HeaderText = "Exp Margin";
+            this.dump_margin.Name = "dump_margin";
+            // 
+            // flip_profit
+            // 
+            this.flip_profit.HeaderText = "Profit";
+            this.flip_profit.Name = "flip_profit";
+            // 
+            // init_profit
+            // 
+            this.init_profit.HeaderText = "Exp Profit";
+            this.init_profit.Name = "init_profit";
             // 
             // Form1
             // 
@@ -561,8 +561,8 @@ namespace Runescraper_v5._13
         private System.Windows.Forms.DataGridViewTextBoxColumn flip_name;
         private System.Windows.Forms.DataGridViewTextBoxColumn flip_low;
         private System.Windows.Forms.DataGridViewTextBoxColumn flip_high;
-        private System.Windows.Forms.DataGridViewTextBoxColumn flip_limit;
-        private System.Windows.Forms.DataGridViewTextBoxColumn day_avg;
+        private System.Windows.Forms.DataGridViewTextBoxColumn user_action;
+        private System.Windows.Forms.DataGridViewTextBoxColumn user_price;
         private System.Windows.Forms.DataGridViewTextBoxColumn flip_margin;
         private System.Windows.Forms.DataGridViewTextBoxColumn dump_margin;
         private System.Windows.Forms.DataGridViewTextBoxColumn flip_profit;

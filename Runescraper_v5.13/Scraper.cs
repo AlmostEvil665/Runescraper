@@ -214,6 +214,8 @@ namespace Runescraper_v5._13
                 {
                     Item item = new Item();
                     item.ID = id;
+                    item.state = state;
+                    Int32.TryParse(data[19], out item.user_price);
                     flips[slot] = item;
                 }
             }
@@ -227,6 +229,8 @@ namespace Runescraper_v5._13
                     {
                         if (curr.ID == item.ID)
                         {
+                            curr.state = item.state;
+                            curr.user_price = item.user_price;
                             checkPricePercentile(curr);
                             flipList.Add(curr);
                         }

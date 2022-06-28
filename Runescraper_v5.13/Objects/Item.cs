@@ -19,6 +19,8 @@ namespace Runescraper_v5._13
         public string name;
         public int volume;
         public int ge_price;
+        public string state;
+        public int user_price;
         public List<int> historical_data;
 
 

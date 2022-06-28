@@ -68,10 +68,32 @@ namespace Runescraper_v5._13
         {
             foreach (Item item in items)
             {
-                flipsGridView.Rows.Add(item.name, item.low, item.high, item.historical_data[item.price_percentile], item.historical_data[item.historical_data.Count - item.price_percentile],
+                int index = flipsGridView.Rows.Add(item.name, item.low, item.high, item.state, item.user_price,
                     item.getMargin(), item.getExpectedMargin(), item.getProfit(), item.getExpectedProfit());
+
+                if(item.state == "BUYING")
+                {
+                    if(item.user_price >= item.low)
+                    {
+                        flipsGridView.Rows[index].DefaultCellStyle.BackColor = Color.LightGreen;
+                    } else
+                    {
+                        flipsGridView.Rows[index].DefaultCellStyle.BackColor = Color.LightPink;
+                    }
+                }
+
+                if(item.state == "SELLING")
+                {
+                    if(item.user_price <= item.high)
+                    {
+                        flipsGridView.Rows[index].DefaultCellStyle.BackColor = Color.LightGreen;
+                    } else
+                    {
+                        flipsGridView.Rows[index].DefaultCellStyle.BackColor = Color.LightPink;
+                    }
+                }
             }
-            
+            flipsGridView.Rows[0].Selected = false;
         }
 
         private void AddItem(Item item)
