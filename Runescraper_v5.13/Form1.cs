@@ -166,21 +166,11 @@ namespace Runescraper_v5._13
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            string[] filter =
-            {
-                min_buy_tbox.Text,
-                max_buy_tbox.Text,
-                min_sell_tbox.Text,
-                max_sell_tbox.Text,
-                min_volume_tbox.Text,
-                min_margin_tbox.Text,
-                min_profit_tbox.Text,
-                cash_stk_tbox.Text
-            };
+
 
             List<string> settings = new List<string>();
 
-            foreach (string s in filter)
+            foreach (string s in vc.getStg().toString().Split('\n'))
                 settings.Add(s);
 
             foreach (DataGridViewRow row in itemGridView.Rows)
@@ -339,7 +329,7 @@ namespace Runescraper_v5._13
 
         private void max_sell_tbox_TextChanged(object sender, EventArgs e)
         {
-            vc.getStg().setMaxBuy(max_buy_tbox.Text);
+            vc.getStg().setMaxSell(max_buy_tbox.Text);
         }
 
         private void min_volume_tbox_TextChanged(object sender, EventArgs e)

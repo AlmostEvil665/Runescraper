@@ -61,7 +61,7 @@ namespace Runescraper_v5._13.Objects
         public void setMinBuy(string value)
         {
             value = convertUnits(value);
-            if (value.Equals("\r"))
+            if (value.Equals("\r") || value.Equals(""))
                 minBuy = -System.Int32.MaxValue;
             else
                 Int32.TryParse(value, out minBuy);
@@ -71,7 +71,7 @@ namespace Runescraper_v5._13.Objects
         public void setMaxBuy(string value)
         {
             value = convertUnits(value);
-            if (value.Equals("\r"))
+            if (value.Equals("\r") || value.Equals(""))
                 maxBuy = System.Int32.MaxValue;
             else
                 Int32.TryParse(value, out maxBuy);
@@ -80,7 +80,7 @@ namespace Runescraper_v5._13.Objects
         public void setMinSell(string value)
         {
             value = convertUnits(value);
-            if (value.Equals("\r"))
+            if (value.Equals("\r") || value.Equals(""))
                 minSell = -System.Int32.MaxValue;
             else
                 Int32.TryParse(value, out minSell);
@@ -89,7 +89,7 @@ namespace Runescraper_v5._13.Objects
         public void setMaxSell(string value)
         {
             value = convertUnits(value);
-            if (value.Equals("\r"))
+            if (value.Equals("\r") || value.Equals(""))
                 maxSell = System.Int32.MaxValue;
             else
                 Int32.TryParse(value, out maxSell);
@@ -98,7 +98,7 @@ namespace Runescraper_v5._13.Objects
         public void setMinVol(string value)
         {
             value = convertUnits(value);
-            if (value.Equals("\r"))
+            if (value.Equals("\r") || value.Equals(""))
                 minVol = -System.Int32.MaxValue;
             else 
                 Int32.TryParse(value, out minVol);
@@ -106,7 +106,7 @@ namespace Runescraper_v5._13.Objects
         public void setMinMargin(string value)
         {
             value = convertUnits(value);
-            if (value.Equals("\r"))
+            if (value.Equals("\r") || value.Equals(""))
                 minMargin = -System.Int32.MaxValue;
             else
                 Int32.TryParse(value, out minMargin);
@@ -115,7 +115,7 @@ namespace Runescraper_v5._13.Objects
         public void setMinProfit(string value)
         {
             value = convertUnits(value);
-            if (value.Equals("\r"))
+            if (value.Equals("\r") || value.Equals(""))
                 minProfit = -System.Int32.MaxValue;
             else
                 Int32.TryParse(value, out minProfit);
@@ -124,7 +124,7 @@ namespace Runescraper_v5._13.Objects
         public void setCashStack(string value)
         {
             value = convertUnits(value);
-            if (value.Equals("\r"))
+            if (value.Equals("\r") || value.Equals(""))
                 cashStack = System.Int32.MaxValue;
             else
                 Int32.TryParse(value, out cashStack);
