@@ -231,13 +231,14 @@ namespace Runescraper_v5._13
             List<Item> chosen_items = new List<Item>();
 
             fitems.Sort();
+            int cash = stg.cashStack;
 
-            while (stg.cashStack >= 0 && fitems.Count > 0 && chosen_items.Count + flipsTable.Count < 8)
+            while (cash >= 0 && fitems.Count > 0 && chosen_items.Count + flipsTable.Count < 8)
             {
                 Item item = fitems[0];
                 fitems.Remove(item);
 
-                int cash = stg.cashStack;
+
 
                 if (cash - item.getCost() > 0 && !alreadyFlipping(item) && scraper.checkPricePercentile(item))
                 {
