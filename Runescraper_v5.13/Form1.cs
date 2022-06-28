@@ -39,6 +39,11 @@ namespace Runescraper_v5._13
 
             vc.suggestFinished += updateWithSuggestions;
 
+            if (!Directory.Exists("items"))
+            {
+                Directory.CreateDirectory("items");
+            }
+
             UpdateBoxes();
         }
 
