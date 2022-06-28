@@ -106,7 +106,6 @@ namespace Runescraper_v5._13
             this.itemGridView.Name = "itemGridView";
             this.itemGridView.Size = new System.Drawing.Size(1050, 308);
             this.itemGridView.TabIndex = 1;
-            this.itemGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // name
             // 
@@ -171,6 +170,7 @@ namespace Runescraper_v5._13
             this.min_buy_tbox.Name = "min_buy_tbox";
             this.min_buy_tbox.Size = new System.Drawing.Size(180, 20);
             this.min_buy_tbox.TabIndex = 4;
+            this.min_buy_tbox.TextChanged += new System.EventHandler(this.min_buy_tbox_TextChanged);
             // 
             // max_buy_lbl
             // 
@@ -187,6 +187,7 @@ namespace Runescraper_v5._13
             this.max_buy_tbox.Name = "max_buy_tbox";
             this.max_buy_tbox.Size = new System.Drawing.Size(180, 20);
             this.max_buy_tbox.TabIndex = 6;
+            this.max_buy_tbox.TextChanged += new System.EventHandler(this.max_buy_tbox_TextChanged);
             // 
             // min_sell_lbl
             // 
@@ -203,6 +204,7 @@ namespace Runescraper_v5._13
             this.min_sell_tbox.Name = "min_sell_tbox";
             this.min_sell_tbox.Size = new System.Drawing.Size(180, 20);
             this.min_sell_tbox.TabIndex = 8;
+            this.min_sell_tbox.TextChanged += new System.EventHandler(this.min_sell_tbox_TextChanged);
             // 
             // max_sell_tbox
             // 
@@ -210,6 +212,7 @@ namespace Runescraper_v5._13
             this.max_sell_tbox.Name = "max_sell_tbox";
             this.max_sell_tbox.Size = new System.Drawing.Size(180, 20);
             this.max_sell_tbox.TabIndex = 10;
+            this.max_sell_tbox.TextChanged += new System.EventHandler(this.max_sell_tbox_TextChanged);
             // 
             // max_sell_lbl
             // 
@@ -226,6 +229,7 @@ namespace Runescraper_v5._13
             this.min_volume_tbox.Name = "min_volume_tbox";
             this.min_volume_tbox.Size = new System.Drawing.Size(180, 20);
             this.min_volume_tbox.TabIndex = 12;
+            this.min_volume_tbox.TextChanged += new System.EventHandler(this.min_volume_tbox_TextChanged);
             // 
             // min_volume_lbl
             // 
@@ -242,6 +246,7 @@ namespace Runescraper_v5._13
             this.cash_stk_tbox.Name = "cash_stk_tbox";
             this.cash_stk_tbox.Size = new System.Drawing.Size(180, 20);
             this.cash_stk_tbox.TabIndex = 14;
+            this.cash_stk_tbox.TextChanged += new System.EventHandler(this.cash_stk_tbox_TextChanged);
             this.cash_stk_tbox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.cash_stk_tbox_KeyDown);
             // 
             // cash_stk_lbl
@@ -259,6 +264,7 @@ namespace Runescraper_v5._13
             this.min_margin_tbox.Name = "min_margin_tbox";
             this.min_margin_tbox.Size = new System.Drawing.Size(180, 20);
             this.min_margin_tbox.TabIndex = 17;
+            this.min_margin_tbox.TextChanged += new System.EventHandler(this.min_margin_tbox_TextChanged);
             // 
             // min_margin_lbl
             // 
@@ -275,6 +281,7 @@ namespace Runescraper_v5._13
             this.min_profit_tbox.Name = "min_profit_tbox";
             this.min_profit_tbox.Size = new System.Drawing.Size(180, 20);
             this.min_profit_tbox.TabIndex = 19;
+            this.min_profit_tbox.TextChanged += new System.EventHandler(this.min_profit_tbox_TextChanged);
             // 
             // min_profit_lbl
             // 

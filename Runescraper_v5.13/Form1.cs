@@ -33,11 +33,11 @@ namespace Runescraper_v5._13
             vc.UpdateMinMargin += updateMinMarginBox;
             vc.UpdateMinProfit += updateMinProfitBox;
             vc.UpdateCashStack += updateCashStackBox;
-
             UpdateBoxes();
         }
 
-        
+
+      
         private void UpdateList(Item item)
         {
             itemGridView.Rows.Add(item.name, item.low, item.high, item.limit, item.volume, item.getMargin(), item.getProfit());
@@ -50,8 +50,8 @@ namespace Runescraper_v5._13
 
         private void scrape_btn_Click_1(object sender, EventArgs e)
         {
-            scrape_btn.Enabled = false;
             scrape_btn.Text = "Scraping...";
+            scrape_btn.Enabled = false;
             itemGridView.Rows.Clear();
             vc.scrapeDB();
         }
@@ -62,47 +62,42 @@ namespace Runescraper_v5._13
             scrape_btn.Enabled = true;
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+       public void updateMinBuyBox(int MinBuySetting)
         {
-            this.itemGridView.Rows.Clear();
+            this.min_buy_tbox.Text = MinBuySetting.ToString();
         }
 
-       public void updateMinBuyBox(string MinBuySetting)
+        public void updateMaxBuyBox(int MaxBuySetting)
         {
-            this.min_buy_tbox.Text = MinBuySetting;
+            this.max_buy_tbox.Text = MaxBuySetting.ToString();
         }
 
-        public void updateMaxBuyBox(string MaxBuySetting)
+        public void updateMinSellBox(int MinSellSetting)
         {
-            this.max_buy_tbox.Text = MaxBuySetting;
+            this.min_sell_tbox.Text = MinSellSetting.ToString();
         }
 
-        public void updateMinSellBox(string MinSellSetting)
+        public void updateMaxSellBox(int MaxSellSetting)
         {
-            this.min_sell_tbox.Text = MinSellSetting;
+            this.max_sell_tbox.Text = MaxSellSetting.ToString();
         }
 
-        public void updateMaxSellBox(string MaxSellSetting)
+        public void updateMinVolBox(int MinVolSetting)
         {
-            this.max_sell_tbox.Text = MaxSellSetting;
+            this.min_volume_tbox.Text = MinVolSetting.ToString();
+        }
+        public void updateMinMarginBox(int MinMarginSetting)
+        {
+            this.min_margin_tbox.Text = MinMarginSetting.ToString();
         }
 
-        public void updateMinVolBox(string MinVolSetting)
+        public void updateMinProfitBox(int MinProfitSetting)
         {
-            this.min_volume_tbox.Text = MinVolSetting;
+            this.min_profit_tbox.Text = MinProfitSetting.ToString();
         }
-        public void updateMinMarginBox(string MinMarginSetting)
+        public void updateCashStackBox(int CashStackSetting)
         {
-            this.min_margin_tbox.Text = MinMarginSetting;
-        }
-
-        public void updateMinProfitBox(string MinProfitSetting)
-        {
-            this.min_profit_tbox.Text = MinProfitSetting;
-        }
-        public void updateCashStackBox(string CashStackSetting)
-        {
-            this.cash_stk_tbox.Text = CashStackSetting;
+            this.cash_stk_tbox.Text = CashStackSetting.ToString();
         }
 
 
@@ -403,6 +398,48 @@ namespace Runescraper_v5._13
             {
                 suggest_items_btn_Click(this, new EventArgs());
             }
+        }
+
+        private void min_buy_tbox_TextChanged(object sender, EventArgs e)
+        {
+            vc.getStg().setMinBuy(min_buy_tbox.Text);
+        }
+
+        private void max_buy_tbox_TextChanged(object sender, EventArgs e)
+        {
+            vc.getStg().setMaxBuy(max_buy_tbox.Text);
+
+        }
+
+        private void min_sell_tbox_TextChanged(object sender, EventArgs e)
+        {
+            vc.getStg().setMinSell(min_sell_tbox.Text);
+
+        }
+
+        private void max_sell_tbox_TextChanged(object sender, EventArgs e)
+        {
+            vc.getStg().setMaxBuy(max_buy_tbox.Text);
+        }
+
+        private void min_volume_tbox_TextChanged(object sender, EventArgs e)
+        {
+            vc.getStg().setMinVol(min_volume_tbox.Text);
+        }
+
+        private void min_margin_tbox_TextChanged(object sender, EventArgs e)
+        {
+            vc.getStg().setMinMargin(min_margin_tbox.Text);
+        }
+
+        private void min_profit_tbox_TextChanged(object sender, EventArgs e)
+        {
+            vc.getStg().setMinProfit(min_profit_tbox.Text);
+        }
+
+        private void cash_stk_tbox_TextChanged(object sender, EventArgs e)
+        {
+            vc.getStg().setCashStack(cash_stk_tbox.Text);
         }
     }
 }
