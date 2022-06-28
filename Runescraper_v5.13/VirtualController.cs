@@ -17,6 +17,7 @@ namespace Runescraper_v5._13
         Settings stg = new Settings();
 
         BackgroundWorker RuneliteWorker = new BackgroundWorker();
+        BackgroundWorker ScrapeWorker = new BackgroundWorker();
 
         public delegate void MinBuyUpdater(int MinBuySetting);
         public event MinBuyUpdater UpdateMinBuy;
@@ -47,7 +48,7 @@ namespace Runescraper_v5._13
         public delegate void FlipSender(List<Item> items);
         public event FlipSender sendFlip;
 
-        public delegate void ScrapeFinishHandler();
+        public delegate void ScrapeFinishHandler(List<Item> items);
         public event ScrapeFinishHandler scrapeFinished;
 
         public delegate void UpdateFinishHandler();
@@ -65,7 +66,9 @@ namespace Runescraper_v5._13
 
             RuneliteWorker.DoWork += scrapeRunelogs;
             RuneliteWorker.RunWorkerCompleted += finishUpdateItems;
-            
+
+            ScrapeWorker.DoWork += scrapeItems;
+            ScrapeWorker.RunWorkerCompleted += finishScrapingItems;
             
 
             string[] settings = new string[0];
@@ -136,7 +139,16 @@ namespace Runescraper_v5._13
 
         }
 
+        private void finishScrapingItems(object sender, RunWorkerCompletedEventArgs e)
+        {
+            scrapeFinished(this.itemsTable);
+        }
 
+        private void scrapeItems(object sender, DoWorkEventArgs e)
+        {
+            this.itemsTable = this.scraper.refresh_items();
+            this.itemsTable = filter_items();
+        }
 
         public Settings getStg()
         {
@@ -145,15 +157,7 @@ namespace Runescraper_v5._13
 
         public void scrapeDB()
         {
-            this.itemsTable = this.scraper.refresh_items();
-            this.itemsTable = filter_items();
-            
-            foreach (Item item in this.itemsTable)
-            {
-                sendItem(item);
-            }
-
-            scrapeFinished();
+            ScrapeWorker.RunWorkerAsync();
         }
 
         public void SendSettings()
