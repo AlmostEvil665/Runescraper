@@ -20,6 +20,7 @@ namespace Runescraper_v5._13
         VirtualController vc = new VirtualController();
         List<Item> _items;
         List<Item> _flips;
+
         public Form1()
         {
             InitializeComponent();
@@ -34,6 +35,24 @@ namespace Runescraper_v5._13
             vc.UpdateMinMargin += updateMinMarginBox;
             vc.UpdateMinProfit += updateMinProfitBox;
             vc.UpdateCashStack += updateCashStackBox;
+
+            vc.suggestFinished += updateWithSuggestions;
+
+            UpdateBoxes();
+        }
+
+        private void updateWithSuggestions(List<Item> suggestions)
+        {
+            itemGridView.Rows.Clear();
+            foreach(Item item in suggestions)
+            {
+                itemGridView.Rows.Add(item.name, item.low, item.high, item.limit, item.volume, item.getMargin(), item.getProfit());
+            }
+            suggest_item_btn.Text = "Suggest Items";
+            suggest_item_btn.Enabled = true;
+        }
+
+        private void UpdateList(Item item)
             vc.updateFinished += finishUpdate;
             UpdateBoxes();
         }
@@ -186,15 +205,7 @@ namespace Runescraper_v5._13
             File.WriteAllLines("settings.stg", settings.ToArray());
         }
 
-        private bool alreadyFlipping(Item item)
-        {
-            foreach(Item currItem in this._flips)
-            {
-                if (currItem.name.Equals(item.name))
-                    return true;
-            }
-            return false;
-        }
+       
 
         /// <summary>
         /// Suggest items button click method
@@ -203,32 +214,10 @@ namespace Runescraper_v5._13
         /// <param name="e"></param>
         private void suggest_items_btn_Click(object sender, EventArgs e)
         {
+
             suggest_item_btn.Text = "Suggesting...";
-            cleanse_items();
-            var fitems = new List<Item>(this._items);
-            Int32.TryParse(cash_stk_tbox.Text, out int cash_stk);
-            List<Item> chosen_items = new List<Item>();
-
-            fitems.Sort();
-
-            while (cash_stk >= 0 && fitems.Count > 0 && chosen_items.Count + this._flips.Count < 8)
-            {
-                Item item = fitems[0];
-                fitems.Remove(item);
-
-                if (cash_stk - item.getCost() > 0 && !alreadyFlipping(item) && this._scraper.checkPricePercentile(item))
-                {
-                    cash_stk = (int)(cash_stk - item.getCost());
-                    chosen_items.Add(item);
-                }
-
-            }
-            itemGridView.Rows.Clear();
-            foreach (Item item in chosen_items)
-            {
-                itemGridView.Rows.Add(item.name, item.low, item.high, item.limit, item.volume, item.getMargin(), item.getProfit());
-            }
-            suggest_item_btn.Text = "Suggest Items";
+            suggest_item_btn.Enabled = false;
+            vc.StartSuggesting();
         }
 
         private void update_btn_Click(object sender, EventArgs e)
@@ -245,30 +234,7 @@ namespace Runescraper_v5._13
             update_btn.Text = "Update Flips";
         }
 
-        private void cleanse_items()
-        {
-            List<Item> removable = new List<Item>();
-            int i = 0;
-            foreach(Item item in this._items)
-            {
-                i = i + 1;
-                if(!this._scraper.isSafe(item))
-                {
-                    removable.Add(item);
-                }
-            }
-
-            foreach(Item item in removable)
-            {
-                this._items.Remove(item);
-            }
-
-            itemGridView.Rows.Clear();
-            foreach (Item item in this._items)
-            {
-                itemGridView.Rows.Add(item.name, item.low, item.high, item.limit, item.volume, item.getMargin(), item.getProfit());
-            }
-        }
+       
 
         private void add_btn_Click(object sender, EventArgs e)
         {
