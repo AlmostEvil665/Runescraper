@@ -91,10 +91,7 @@ namespace Runescraper_v5._13
                 stg.setMinVol(settings[4]);
                 stg.setMinMargin(settings[5]);
                 stg.setMinProfit(settings[6]);
-
-
-                Int32.TryParse(settings[7], out int cashStack);
-
+                stg.setCashStack(settings[7]);
 
             }
             catch
@@ -106,7 +103,9 @@ namespace Runescraper_v5._13
             for (int i = j; i < settings.Length; i++)
             {
                 string line = settings[i];
-                if (line == "" || line == "flips\r")
+                if (line == "")
+                    continue;
+                if (line == "flips\r")
                     break;
                 string[] vals = line.Split(',');
                 //call grid signal
@@ -155,10 +154,6 @@ namespace Runescraper_v5._13
             this.itemsTable = this.scraper.refresh_items();
             this.itemsTable = filter_items();
 
-            foreach (Item item in this.itemsTable)
-            {
-                sendItem(item);
-            }
 
         }
 
