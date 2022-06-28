@@ -301,6 +301,7 @@ namespace Runescraper_v5._13
         }
         private void scrapeRunelogs(object sender, DoWorkEventArgs e)
         {
+            this.flipsTable = new List<Item>();
             List<Item> logFlips = this.scraper.grabGeLogs();
             e.Result = logFlips;
         }
