@@ -23,7 +23,8 @@ namespace Runescraper_v5._13
         public Form1()
         {
             InitializeComponent();
-            vc.sendItem += UpdateList;
+            vc.sendItem += AddItem;
+            vc.sendFlip += addFlips;
             vc.scrapeFinished += finishScrape;
             vc.UpdateMinBuy += updateMinBuyBox;
             vc.UpdateMaxBuy += updateMaxBuyBox;
@@ -33,12 +34,23 @@ namespace Runescraper_v5._13
             vc.UpdateMinMargin += updateMinMarginBox;
             vc.UpdateMinProfit += updateMinProfitBox;
             vc.UpdateCashStack += updateCashStackBox;
+            vc.updateFinished += finishUpdate;
             UpdateBoxes();
         }
 
+        private void addFlips(List<Item> items)
+        {
+            foreach (Item item in items)
+            {
+                item.init_margin = item.getMargin();
+                item.init_profit = item.getProfit();
+                flipsGridView.Rows.Add(item.name, item.low, item.high, item.historical_data[item.price_percentile], item.historical_data[item.historical_data.Count - item.price_percentile],
+                    item.getMargin(), item.getExpectedMargin(), item.getProfit(), item.getExpectedProfit());
+            }
+            
+        }
 
-      
-        private void UpdateList(Item item)
+        private void AddItem(Item item)
         {
             itemGridView.Rows.Add(item.name, item.low, item.high, item.limit, item.volume, item.getMargin(), item.getProfit());
         }
@@ -61,8 +73,8 @@ namespace Runescraper_v5._13
             scrape_btn.Text = "Scrape";
             scrape_btn.Enabled = true;
         }
-
-       public void updateMinBuyBox(int MinBuySetting)
+        
+        public void updateMinBuyBox(int MinBuySetting)
         {
             this.min_buy_tbox.Text = MinBuySetting.ToString();
         }
@@ -99,7 +111,7 @@ namespace Runescraper_v5._13
         {
             this.cash_stk_tbox.Text = CashStackSetting.ToString();
         }
-
+    
 
         private void delete_items_btn_Click(object sender, EventArgs e)
         {
@@ -216,86 +228,15 @@ namespace Runescraper_v5._13
         private void update_btn_Click(object sender, EventArgs e)
         {
             update_btn.Text = "Updating...";
-            List<Item> new_prices = _scraper.refresh_items();
+            update_btn.Enabled = false;
+            this.flipsGridView.Rows.Clear();
+            vc.updateItems();
+        }
 
-            //Update current flips
-            string userProfile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-            String itemids = File.ReadAllText(userProfile + "/.runelite/FlipAssistant_FlipIDs.txt");
-
-            flipsGridView.Rows.Clear();
-            foreach (string line in itemids.Split('\n'))
-            {
-                foreach (Item item in new_prices)
-                {
-                    if (item.ID.ToString().Equals(line))
-                    {
-                        flipsGridView.Rows.Add(item.name, item.low, item.high, item.historical_data[item.price_percentile], item.historical_data[item.historical_data.Count - item.price_percentile],
-                            item.getMargin(), item.getExpectedMargin(), item.getProfit(), item.getExpectedProfit());
-                        break;
-                    }
-                }
-            }
-
-            List<Item> display_list = new List<Item>();
-            List<Item> flip_display_list = new List<Item>();
-
-            foreach(DataGridViewRow row in itemGridView.Rows)
-            {
-                var name = row.Cells[0].Value;
-
-                foreach(Item item in this._items)
-                {
-                    if (item.name.Equals(name)) {
-                        foreach(Item new_item in new_prices)
-                        {
-                            if(new_item.name.Equals(item.name))
-                            {
-                                item.low = new_item.low;
-                                item.high = new_item.high;
-                                item.volume = new_item.volume;
-                                item.day_avg_buy = new_item.day_avg_buy;
-                                item.day_avg_sell = new_item.day_avg_sell;
-                                break;
-                            }
-                        }
-                        display_list.Add(item);
-                        break;
-                    }
-                }
-            }
-            foreach(DataGridViewRow row in flipsGridView.Rows)
-            {
-                var name = row.Cells[0].Value;
-
-                foreach(Item item in this._flips)
-                {
-                    if(item.name.Equals(name))
-                    {
-                        foreach(Item new_item in new_prices)
-                        {
-                            if(new_item.name.Equals(item.name))
-                            {
-                                item.low = new_item.low;
-                                item.high = new_item.high;
-                                item.volume = new_item.volume;
-                                item.limit = new_item.limit;
-                                item.day_avg_buy = new_item.day_avg_buy;
-                                item.day_avg_sell = new_item.day_avg_sell;
-                                break;
-                            }
-                        }
-                        flip_display_list.Add(item);
-                    }
-                }
-            }
-
-            itemGridView.Rows.Clear();
-            foreach (Item item in display_list)
-            {
-                itemGridView.Rows.Add(item.name, item.low, item.high, item.limit, item.volume, item.getMargin(), item.getProfit());
-            }
-
-            update_btn.Text = "Update Prices";
+        private void finishUpdate()
+        {
+            update_btn.Enabled = true;
+            update_btn.Text = "Update Flips";
         }
 
         private void cleanse_items()

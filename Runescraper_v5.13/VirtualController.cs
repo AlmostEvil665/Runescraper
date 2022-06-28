@@ -15,8 +15,8 @@ namespace Runescraper_v5._13
         List<Item> itemsTable;
         List<Item> flipsTable;
         Settings stg = new Settings();
-        
-       
+
+        BackgroundWorker RuneliteWorker = new BackgroundWorker();
 
         public delegate void MinBuyUpdater(int MinBuySetting);
         public event MinBuyUpdater UpdateMinBuy;
@@ -44,8 +44,14 @@ namespace Runescraper_v5._13
         public delegate void ItemSender(Item item);
         public event ItemSender sendItem;
 
+        public delegate void FlipSender(List<Item> items);
+        public event FlipSender sendFlip;
+
         public delegate void ScrapeFinishHandler();
         public event ScrapeFinishHandler scrapeFinished;
+
+        public delegate void UpdateFinishHandler();
+        public event UpdateFinishHandler updateFinished;
 
         //init
         /// <summary>
@@ -56,8 +62,9 @@ namespace Runescraper_v5._13
             itemsTable = new List<Item>();
             flipsTable = new List<Item>();
             scraper = new Scraper();
-            
 
+            RuneliteWorker.DoWork += scrapeRunelogs;
+            RuneliteWorker.RunWorkerCompleted += finishUpdateItems;
             
             
 
@@ -128,7 +135,9 @@ namespace Runescraper_v5._13
             }
 
         }
-        
+
+
+
         public Settings getStg()
         {
             return stg;
@@ -197,5 +206,34 @@ namespace Runescraper_v5._13
 
             return filtered_items;
         }
+
+        /// <summary>
+        /// Instructs the Runeworker to begin working
+        /// </summary>
+        public void updateItems()
+        {
+            RuneliteWorker.RunWorkerAsync();
+        }
+        private void scrapeRunelogs(object sender, DoWorkEventArgs e)
+        {
+            List<Item> logFlips = this.scraper.grabGeLogs();
+            e.Result = logFlips;
+        }
+
+        private void finishUpdateItems(object sender, RunWorkerCompletedEventArgs e)
+        {
+            List<Item> flips = ((List<Item>) e.Result);
+            sendFlip(flips);
+
+            foreach(Item flip in flips)
+            {
+                flipsTable.Add(flip);
+            }
+
+            updateFinished();
+        }
+
+
+
     }
 }
