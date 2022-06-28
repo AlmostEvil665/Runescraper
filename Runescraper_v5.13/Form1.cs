@@ -68,10 +68,16 @@ namespace Runescraper_v5._13
             vc.scrapeDB();
         }
 
-        private void finishScrape()
+        private void finishScrape(List<Item> itemsTable)
         {
+            foreach (Item item in itemsTable)
+            {
+                AddItem(item);
+            }
+
             scrape_btn.Text = "Scrape";
             scrape_btn.Enabled = true;
+
         }
         
         public void updateMinBuyBox(int MinBuySetting)
