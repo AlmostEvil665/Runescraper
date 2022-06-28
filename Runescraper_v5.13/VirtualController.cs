@@ -99,7 +99,7 @@ namespace Runescraper_v5._13
 
             }
 
-            int j = 8;
+            /*int j = 8;
             for (int i = j; i < settings.Length; i++)
             {
                 string line = settings[i];
@@ -140,7 +140,7 @@ namespace Runescraper_v5._13
                 Int32.TryParse(vals[5], out item.init_margin);
                 item.init_profit = long.Parse(vals[6]);
                 flipsTable.Add(item);
-            }
+            }*/
 
         }
 
@@ -237,9 +237,11 @@ namespace Runescraper_v5._13
                 Item item = fitems[0];
                 fitems.Remove(item);
 
-                if (stg.cashStack - item.getCost() > 0 && !alreadyFlipping(item) && scraper.checkPricePercentile(item))
+                int cash = stg.cashStack;
+
+                if (cash - item.getCost() > 0 && !alreadyFlipping(item) && scraper.checkPricePercentile(item))
                 {
-                    stg.cashStack = (int)(stg.cashStack - item.getCost());
+                    cash = (int)(cash - item.getCost());
                     chosen_items.Add(item);
                 }
 

@@ -173,7 +173,7 @@ namespace Runescraper_v5._13
             foreach (string s in vc.getStg().toString().Split('\n'))
                 settings.Add(s);
 
-            foreach (DataGridViewRow row in itemGridView.Rows)
+/*            foreach (DataGridViewRow row in itemGridView.Rows)
             {
                 if (row.Cells[0].Value is null)
                     break;
@@ -197,7 +197,7 @@ namespace Runescraper_v5._13
                     s = s + row.Cells[i].Value.ToString() + ",";
                 }
                 settings.Add(s);
-            }
+            }*/
 
             File.WriteAllLines("settings.stg", settings.ToArray());
         }
