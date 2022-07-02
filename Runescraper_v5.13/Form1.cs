@@ -73,7 +73,7 @@ namespace Runescraper_v5._13
 
                 if(item.state == "BUYING")
                 {
-                    if(item.user_price >= item.low)
+                    if(item.user_price >= item.low || item.orderTime.AddHours(2) >= DateTime.Now)
                     {
                         flipsGridView.Rows[index].DefaultCellStyle.BackColor = Color.LightGreen;
                     } else
@@ -84,7 +84,7 @@ namespace Runescraper_v5._13
 
                 if(item.state == "SELLING")
                 {
-                    if(item.user_price <= item.high)
+                    if(item.user_price <= item.high || item.orderTime.AddHours(2) >= DateTime.Now)
                     {
                         flipsGridView.Rows[index].DefaultCellStyle.BackColor = Color.LightGreen;
                     } else

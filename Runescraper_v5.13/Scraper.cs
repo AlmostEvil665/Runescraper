@@ -203,6 +203,10 @@ namespace Runescraper_v5._13
                 String state = data[7];
                 Int32.TryParse(data[9], out int slot);
                 Int32.TryParse(data[11], out int id);
+                String[] date = data[1].Split('-');
+                string hour = data[3];
+                string minute = data[4];
+                string second = data[5];
 
                 if (state.Equals("EMPTY") || state.Equals("CANCELLED_BUY") || state.Equals("CANCELLED_SELL") 
                     || state.Equals("SOLD") || state.Equals("BOUGHT") )
@@ -216,6 +220,7 @@ namespace Runescraper_v5._13
                     item.ID = id;
                     item.state = state;
                     Int32.TryParse(data[19], out item.user_price);
+                    item.orderTime = stringToTime(date[0], date[1], date[2], hour, minute, second);
                     flips[slot] = item;
                 }
             }
@@ -231,6 +236,7 @@ namespace Runescraper_v5._13
                         {
                             curr.state = item.state;
                             curr.user_price = item.user_price;
+                            curr.orderTime = item.orderTime;
                             checkPricePercentile(curr);
                             flipList.Add(curr);
                         }
@@ -238,6 +244,18 @@ namespace Runescraper_v5._13
                 }
             }
             return flipList;
+        }
+
+        public DateTime stringToTime(string year, string month, string day, string hour, string minute, string second)
+        {
+            Int32.TryParse(year, out int yr);
+            Int32.TryParse(month, out int mo);
+            Int32.TryParse(day, out int dy);
+            Int32.TryParse(hour, out int hr);
+            Int32.TryParse(minute, out int min);
+            Int32.TryParse(second, out int sec);
+
+            return new DateTime(yr, mo, dy, hr, min, sec);
         }
 
         internal bool isSafe(Item item)

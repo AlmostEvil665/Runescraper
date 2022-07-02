@@ -22,6 +22,7 @@ namespace Runescraper_v5._13
         public string state;
         public int user_price;
         public List<int> historical_data;
+        public DateTime orderTime;
 
 
         public Item()
