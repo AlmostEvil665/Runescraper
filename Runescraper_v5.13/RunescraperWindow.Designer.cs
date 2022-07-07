@@ -1,7 +1,7 @@
 ﻿
-namespace Runescraper_v5._13
+namespace Runescraper
 {
-    partial class Form1
+    partial class RunescraperWindow
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@ namespace Runescraper_v5._13
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RunescraperWindow));
             this.scrape_btn = new System.Windows.Forms.Button();
             this.itemGridView = new System.Windows.Forms.DataGridView();
             this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -64,10 +64,6 @@ namespace Runescraper_v5._13
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.flipsGridView = new System.Windows.Forms.DataGridView();
-            this.add_flip_btn = new System.Windows.Forms.Button();
-            this.remove_flip_btn = new System.Windows.Forms.Button();
-            this.flips_lbl = new System.Windows.Forms.Label();
-            this.items_lbl = new System.Windows.Forms.Label();
             this.flip_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.flip_low = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.flip_high = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -77,6 +73,10 @@ namespace Runescraper_v5._13
             this.dump_margin = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.flip_profit = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.init_profit = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.add_flip_btn = new System.Windows.Forms.Button();
+            this.remove_flip_btn = new System.Windows.Forms.Button();
+            this.flips_lbl = new System.Windows.Forms.Label();
+            this.items_lbl = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.itemGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.flipsGridView)).BeginInit();
             this.SuspendLayout();
@@ -385,46 +385,6 @@ namespace Runescraper_v5._13
             this.flipsGridView.Size = new System.Drawing.Size(1052, 219);
             this.flipsGridView.TabIndex = 28;
             // 
-            // add_flip_btn
-            // 
-            this.add_flip_btn.Location = new System.Drawing.Point(325, 255);
-            this.add_flip_btn.Name = "add_flip_btn";
-            this.add_flip_btn.Size = new System.Drawing.Size(75, 23);
-            this.add_flip_btn.TabIndex = 29;
-            this.add_flip_btn.Text = "Add Flips";
-            this.add_flip_btn.UseVisualStyleBackColor = true;
-            this.add_flip_btn.Click += new System.EventHandler(this.add_flip_btn_Click);
-            // 
-            // remove_flip_btn
-            // 
-            this.remove_flip_btn.Location = new System.Drawing.Point(610, 255);
-            this.remove_flip_btn.Name = "remove_flip_btn";
-            this.remove_flip_btn.Size = new System.Drawing.Size(75, 23);
-            this.remove_flip_btn.TabIndex = 30;
-            this.remove_flip_btn.Text = "Rem Flips";
-            this.remove_flip_btn.UseVisualStyleBackColor = true;
-            this.remove_flip_btn.Click += new System.EventHandler(this.remove_flip_btn_Click);
-            // 
-            // flips_lbl
-            // 
-            this.flips_lbl.AutoSize = true;
-            this.flips_lbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
-            this.flips_lbl.Location = new System.Drawing.Point(12, 1);
-            this.flips_lbl.Name = "flips_lbl";
-            this.flips_lbl.Size = new System.Drawing.Size(58, 26);
-            this.flips_lbl.TabIndex = 31;
-            this.flips_lbl.Text = "Flips";
-            // 
-            // items_lbl
-            // 
-            this.items_lbl.AutoSize = true;
-            this.items_lbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
-            this.items_lbl.Location = new System.Drawing.Point(12, 255);
-            this.items_lbl.Name = "items_lbl";
-            this.items_lbl.Size = new System.Drawing.Size(66, 26);
-            this.items_lbl.TabIndex = 32;
-            this.items_lbl.Text = "Items";
-            // 
             // flip_name
             // 
             this.flip_name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
@@ -471,7 +431,47 @@ namespace Runescraper_v5._13
             this.init_profit.HeaderText = "Exp Profit";
             this.init_profit.Name = "init_profit";
             // 
-            // Form1
+            // add_flip_btn
+            // 
+            this.add_flip_btn.Location = new System.Drawing.Point(325, 255);
+            this.add_flip_btn.Name = "add_flip_btn";
+            this.add_flip_btn.Size = new System.Drawing.Size(75, 23);
+            this.add_flip_btn.TabIndex = 29;
+            this.add_flip_btn.Text = "Add Flips";
+            this.add_flip_btn.UseVisualStyleBackColor = true;
+            this.add_flip_btn.Click += new System.EventHandler(this.add_flip_btn_Click);
+            // 
+            // remove_flip_btn
+            // 
+            this.remove_flip_btn.Location = new System.Drawing.Point(610, 255);
+            this.remove_flip_btn.Name = "remove_flip_btn";
+            this.remove_flip_btn.Size = new System.Drawing.Size(75, 23);
+            this.remove_flip_btn.TabIndex = 30;
+            this.remove_flip_btn.Text = "Rem Flips";
+            this.remove_flip_btn.UseVisualStyleBackColor = true;
+            this.remove_flip_btn.Click += new System.EventHandler(this.remove_flip_btn_Click);
+            // 
+            // flips_lbl
+            // 
+            this.flips_lbl.AutoSize = true;
+            this.flips_lbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
+            this.flips_lbl.Location = new System.Drawing.Point(12, 1);
+            this.flips_lbl.Name = "flips_lbl";
+            this.flips_lbl.Size = new System.Drawing.Size(58, 26);
+            this.flips_lbl.TabIndex = 31;
+            this.flips_lbl.Text = "Flips";
+            // 
+            // items_lbl
+            // 
+            this.items_lbl.AutoSize = true;
+            this.items_lbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
+            this.items_lbl.Location = new System.Drawing.Point(12, 255);
+            this.items_lbl.Name = "items_lbl";
+            this.items_lbl.Size = new System.Drawing.Size(66, 26);
+            this.items_lbl.TabIndex = 32;
+            this.items_lbl.Text = "Items";
+            // 
+            // RunescraperWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -508,7 +508,7 @@ namespace Runescraper_v5._13
             this.Controls.Add(this.scrape_btn);
             this.Controls.Add(this.groupBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "Form1";
+            this.Name = "RunescraperWindow";
             this.Text = "Runescraper";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.itemGridView)).EndInit();

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Runescraper_v5._13
+namespace Runescraper
 {
 
     class Item : IComparable<Item>

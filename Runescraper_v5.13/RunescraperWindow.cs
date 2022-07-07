@@ -11,17 +11,17 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 
-namespace Runescraper_v5._13
+namespace Runescraper
 {
 
-    public partial class Form1 : Form
+    public partial class RunescraperWindow : Form
     {
         Scraper _scraper;
         VirtualController vc = new VirtualController();
         List<Item> _items;
         List<Item> _flips;
 
-        public Form1()
+        public RunescraperWindow()
         {
             InitializeComponent();
             vc.sendItem += AddItem;

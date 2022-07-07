@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
-using Runescraper_v5._13.Objects;
+using Runescraper.Objects;
 
-namespace Runescraper_v5._13
+namespace Runescraper
 {
     class VirtualController
     {

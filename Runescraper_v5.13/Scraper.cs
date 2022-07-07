@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 
-namespace Runescraper_v5._13
+namespace Runescraper
 {
     
     class Scraper

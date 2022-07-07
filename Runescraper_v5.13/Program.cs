@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Runescraper_v5._13
+namespace Runescraper
 {
     static class Program
     {
@@ -16,7 +16,7 @@ namespace Runescraper_v5._13
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new RunescraperWindow());
         }
     }
 }
