@@ -1,7 +1,7 @@
 
 using Runescraper;
 using GEScraper;
-using FlipGetter;
+using RunescraperObjects;
 using System.IO;
 using System.Reflection;
 using UIShell.Properties;
@@ -14,76 +14,73 @@ namespace UIShell
         
         int PaddingValue = 30;
 
-        UIController controller = new UIController();
-        FlipGetterWindow fg = new FlipGetterWindow();
+        Controller controller = new Controller();
+        
         public UIWindow()
         {
+            //default code
             InitializeComponent();
             Assembly assembly = Assembly.GetExecutingAssembly();
-            tableLayoutPanel1.BackgroundImage = Resources.runescape;
-            this.IsMdiContainer = true;
+           
+            //faster paint time settings
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+            this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+            this.SetStyle(ControlStyles.UserPaint, true);
 
-           // rw = new RunescraperWindow();
-           // ge = new GEScraperWindow();
-            fg = new FlipGetterWindow();
-
+            
             FlipGetterSetup();
-           // controller.UISetup(this);
-            
+            ControllerSetup();
 
-            /*
-            ge.TopLevel = false;
-            ge.FormBorderStyle = FormBorderStyle.None;
-            ge.AutoSize = true;
-            ge.AutoSizeMode = AutoSizeMode.GrowOnly;
-          //  ge.Dock = DockStyle.Fill;
+           
             
-            ge.StartPosition = FormStartPosition.Manual;
-            ge.MdiParent = this;
+        }
 
-            ge.Location = new Point(button1.Location.X,button1.Location.Y + button1.Height + 5);
-            ge.Anchor = (AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom);
+        private void ControllerSetup()
+        {
+            controller.suggestFinished += FlipGetterForm.updateWithSuggestions;
+            controller.flipperscrapeFinished += FlipGetterForm.finishUpdatingPrices;
+
+            controller.scrapeFinished += DummyFunction;
             
-            //   ge.Size = new Size(this.Width - 10, this.Height - ge.Location.Y);
-            ge.Visible = true;
-            
-            rw.TopLevel = false;
-            rw.FormBorderStyle = FormBorderStyle.None;
-            
-            rw.Dock = DockStyle.Fill;
-            rw.MdiParent = this;
-           // rw.BackColor = Color.Transparent;
-            rw.Hide();
-            */
-            
+        }
+
+       private void DummyFunction(List<Item> items)
+        {
+            //I am a dummy function that is hooked up to scrapeFinished signal from controller
+            //reassign the scrapeFinished to the GE Searcher window, make it update that window with flips
         }
 
         private void FlipGetterSetup()
         {
-            fg = new FlipGetterWindow();
-            fg.TopLevel = false;
-            fg.FormBorderStyle = FormBorderStyle.None;
-            fg.AutoSize = true;
-            // fg.Dock = DockStyle.Fill;
-            fg.Anchor = (AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom);
-            fg.Visible = true;
-            fg.MdiParent = this;
+
+            Control[] controlArray = FlipGetterForm.Controls.Find("SuggestFlipsButton", true);
+            Button suggestFlipsButton = (Button)controlArray[0];
+            suggestFlipsButton.Click += SuggestFlip_Click;
+
+            controlArray = FlipGetterForm.Controls.Find("UpdatePricesButton", true);
+            Button updatePricesButton = (Button)controlArray[0];
+            updatePricesButton.Click += UpdatePricesFromFlipper_Click;
+           
         }
 
         private void FlipGetterButton_Click(object sender, EventArgs e)
         {
             RemoveShownForm();
-            tableLayoutPanel1.Controls.Add(fg);
-            tableLayoutPanel1.SetColumn(fg, 0);
-            tableLayoutPanel1.SetRow(fg, 1);
+            FlipGetterForm.Visible = true;
+        }
+        private void SuggestFlip_Click(object sender, EventArgs e)
+        {
+            controller.StartSuggesting();
+        }
+
+        private void UpdatePricesFromFlipper_Click(object sender, EventArgs e)
+        {
+            controller.scrapeDB();
         }
 
         private void RemoveShownForm()
         {
-            if (tableLayoutPanel1.Controls.Count > 1)
-            {
-                tableLayoutPanel1.Controls.RemoveAt(1);
-            }
+           FlipGetterForm.Visible = false;
         }
 
         private void Form1_Resize(object sender, EventArgs e)
@@ -103,5 +100,12 @@ namespace UIShell
             RemoveShownForm();
             //add form to layout
         }
+
+        private void toolStripContainer1_TopToolStripPanel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+       
     }
 }

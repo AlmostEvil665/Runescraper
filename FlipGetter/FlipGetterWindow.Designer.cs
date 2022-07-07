@@ -51,6 +51,7 @@
             // mainLayout
             // 
             this.mainLayout.AutoSize = true;
+            this.mainLayout.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.mainLayout.ColumnCount = 2;
             this.mainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 90F));
             this.mainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
@@ -104,6 +105,8 @@
             // CashStackLabel
             // 
             this.CashStackLabel.AutoSize = true;
+            this.CashStackLabel.BackColor = System.Drawing.SystemColors.Highlight;
+            this.CashStackLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.CashStackLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.CashStackLabel.Location = new System.Drawing.Point(3, 0);
             this.CashStackLabel.Name = "CashStackLabel";

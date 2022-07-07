@@ -13,9 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GEScraper", "GEScraper\GESc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HallofFlips", "HallofFlips\HallofFlips.csproj", "{09E19102-3A83-4533-84D3-F86EF5071509}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlipGetter", "FlipGetter\FlipGetter.csproj", "{9C08A1E9-2349-492C-BEB8-D99B0DC6AEE7}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UIController", "UniversalController\UIController.csproj", "{208127B6-059B-4998-A307-B4CD6817753C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UIController", "UniversalController\UIController.csproj", "{208127B6-059B-4998-A307-B4CD6817753C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,10 +37,6 @@ Global
 		{09E19102-3A83-4533-84D3-F86EF5071509}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{09E19102-3A83-4533-84D3-F86EF5071509}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{09E19102-3A83-4533-84D3-F86EF5071509}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9C08A1E9-2349-492C-BEB8-D99B0DC6AEE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9C08A1E9-2349-492C-BEB8-D99B0DC6AEE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9C08A1E9-2349-492C-BEB8-D99B0DC6AEE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9C08A1E9-2349-492C-BEB8-D99B0DC6AEE7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{208127B6-059B-4998-A307-B4CD6817753C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{208127B6-059B-4998-A307-B4CD6817753C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{208127B6-059B-4998-A307-B4CD6817753C}.Release|Any CPU.ActiveCfg = Release|Any CPU

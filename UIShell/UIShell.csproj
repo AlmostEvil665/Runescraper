@@ -9,7 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FlipGetter\FlipGetter.csproj" />
     <ProjectReference Include="..\GEScraper\GEScraper.csproj" />
     <ProjectReference Include="..\HallofFlips\HallofFlips.csproj" />
     <ProjectReference Include="..\Runescraper_v5.13\Runescraper_v5.13.csproj" />
