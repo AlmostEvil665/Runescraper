@@ -39,6 +39,7 @@
             this.ExitButton = new System.Windows.Forms.Button();
             this.FlipGetterForm = new UIShell.FlipGetter();
             this.label1 = new System.Windows.Forms.Label();
+            this.geScraperForm = new UIShell.GEScraper();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -189,6 +190,16 @@
             this.label1.Text = "Flipscraper - The Ultimate OSRS Moneymaking Tool";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // geScraperForm
+            // 
+            this.geScraperForm.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.geScraperForm.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.geScraperForm.Location = new System.Drawing.Point(0, 58);
+            this.geScraperForm.Name = "geScraperForm";
+            this.geScraperForm.Size = new System.Drawing.Size(914, 332);
+            this.geScraperForm.TabIndex = 3;
+            this.geScraperForm.Visible = false;
+            // 
             // UIWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 13F);
@@ -198,6 +209,7 @@
             this.BackgroundImage = global::UIShell.Properties.Resources.runescape;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(914, 390);
+            this.Controls.Add(this.geScraperForm);
             this.Controls.Add(this.FlipGetterForm);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.label1);
@@ -227,5 +239,6 @@
         private Button FullScreenWindowButton;
         private Button ExitButton;
         private Label label1;
+        private GEScraper geScraperForm;
     }
 }

@@ -9,13 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GEScraper\GEScraper.csproj" />
-    <ProjectReference Include="..\HallofFlips\HallofFlips.csproj" />
-    <ProjectReference Include="..\Runescraper_v5.13\Runescraper_v5.13.csproj" />
-    <ProjectReference Include="..\UniversalController\UIController.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

@@ -1,11 +1,10 @@
 
-using Runescraper;
-using GEScraper;
+
 using RunescraperObjects;
 using System.IO;
 using System.Reflection;
 using UIShell.Properties;
-using UIControllerSpace;
+
 
 namespace UIShell
 {
@@ -29,6 +28,7 @@ namespace UIShell
 
             
             FlipGetterSetup();
+            GEScraperSetup();
             ControllerSetup();
 
            
@@ -46,8 +46,7 @@ namespace UIShell
 
        private void DummyFunction(List<Item> items)
         {
-            //I am a dummy function that is hooked up to scrapeFinished signal from controller
-            //reassign the scrapeFinished to the GE Searcher window, make it update that window with flips
+            geScraperForm.addItems(items);
         }
 
         private void FlipGetterSetup()
@@ -59,28 +58,40 @@ namespace UIShell
 
             controlArray = FlipGetterForm.Controls.Find("UpdatePricesButton", true);
             Button updatePricesButton = (Button)controlArray[0];
-            updatePricesButton.Click += UpdatePricesFromFlipper_Click;
+            updatePricesButton.Click += UpdatePrices_Click;
+
            
+        }
+
+        private void GEScraperSetup()
+        {
+            Control[] controlArray = geScraperForm.Controls.Find("UpdatePricesButton", true);
+            Button updatePricesButton = (Button)controlArray[0];
+            updatePricesButton.Click += UpdatePrices_Click;
         }
 
         private void FlipGetterButton_Click(object sender, EventArgs e)
         {
             RemoveShownForm();
             FlipGetterForm.Visible = true;
+            FlipGetterForm.Focus();
         }
         private void SuggestFlip_Click(object sender, EventArgs e)
         {
             controller.StartSuggesting();
         }
 
-        private void UpdatePricesFromFlipper_Click(object sender, EventArgs e)
+        private void UpdatePrices_Click(object sender, EventArgs e)
         {
             controller.scrapeDB();
         }
 
+        
+
         private void RemoveShownForm()
         {
            FlipGetterForm.Visible = false;
+           geScraperForm.Visible = false;
         }
 
         private void Form1_Resize(object sender, EventArgs e)
@@ -98,6 +109,8 @@ namespace UIShell
         private void GESearchButton_Click(object sender, EventArgs e)
         {
             RemoveShownForm();
+            geScraperForm.Visible = true;
+            geScraperForm.Focus();
             //add form to layout
         }
 
