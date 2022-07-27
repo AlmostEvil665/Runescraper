@@ -16,5 +16,40 @@ namespace UIShell
         {
             InitializeComponent();
         }
+
+
+        public void updateMinBuyBox(int MinBuySetting)
+        {
+            this.MinBuyTextbox.Text = MinBuySetting.ToString();
+        }
+
+        public void updateMaxBuyBox(int MaxBuySetting)
+        {
+            this.MaxBuyTextbox.Text = MaxBuySetting.ToString();
+        }
+
+        public void updateMinSellBox(int MinSellSetting)
+        {
+            this.MinSellTextbox.Text = MinSellSetting.ToString();
+        }
+
+        public void updateMaxSellBox(int MaxSellSetting)
+        {
+            this.MaxSellTextbox.Text = MaxSellSetting.ToString();
+        }
+
+        public void updateMinVolBox(int MinVolSetting)
+        {
+            this.MinVolTextbox.Text = MinVolSetting.ToString();
+        }
+        public void updateMinMarginBox(int MinMarginSetting)
+        {
+            this.MinMarginTextbox.Text = MinMarginSetting.ToString();
+        }
+
+        public void updateMinProfitBox(int MinProfitSetting)
+        {
+            this.MinProfitTextbox.Text = MinProfitSetting.ToString();
+        }
     }
 }

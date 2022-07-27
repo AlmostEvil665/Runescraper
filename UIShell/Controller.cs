@@ -148,8 +148,8 @@ namespace UIShell
                 UpdateMinMargin(this.stg.minMargin);
             if (Math.Abs(this.stg.minProfit) != Math.Abs(System.Int32.MaxValue))
                 UpdateMinProfit(this.stg.minProfit);
-            if (Math.Abs(this.stg.cashStack) != Math.Abs(System.Int32.MaxValue))
-                UpdateCashStack(this.stg.cashStack);
+           // if (Math.Abs(this.stg.cashStack) != Math.Abs(System.Int32.MaxValue)) 
+              //  UpdateCashStack(this.stg.cashStack);
 
         }
 

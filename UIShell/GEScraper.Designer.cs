@@ -53,6 +53,7 @@
             // 
             // tableLayoutPanel1
             // 
+            this.tableLayoutPanel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(24)))));
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 90F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
@@ -63,12 +64,12 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(900, 600);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1029, 640);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // rightLayout
             // 
-            this.rightLayout.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.rightLayout.BackColor = System.Drawing.Color.Black;
             this.rightLayout.ColumnCount = 1;
             this.rightLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.rightLayout.Controls.Add(this.SuggestFlipsButton, 0, 2);
@@ -76,51 +77,51 @@
             this.rightLayout.Controls.Add(this.ItemSearchLabel, 0, 0);
             this.rightLayout.Controls.Add(this.UpdatePricesButton, 0, 5);
             this.rightLayout.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rightLayout.Location = new System.Drawing.Point(814, 3);
-            this.rightLayout.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.rightLayout.ForeColor = System.Drawing.Color.Yellow;
+            this.rightLayout.Location = new System.Drawing.Point(931, 3);
+            this.rightLayout.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.rightLayout.Name = "rightLayout";
             this.rightLayout.RowCount = 6;
-            this.rightLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 48F));
-            this.rightLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
+            this.rightLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 51F));
+            this.rightLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.rightLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.rightLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 87F));
-            this.rightLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 17F));
+            this.rightLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 93F));
+            this.rightLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 18F));
             this.rightLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.rightLayout.Size = new System.Drawing.Size(82, 594);
+            this.rightLayout.Size = new System.Drawing.Size(93, 634);
             this.rightLayout.TabIndex = 2;
             // 
             // SuggestFlipsButton
             // 
-            this.SuggestFlipsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.SuggestFlipsButton.FlatAppearance.BorderSize = 0;
-            this.SuggestFlipsButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.SuggestFlipsButton.Location = new System.Drawing.Point(4, 77);
-            this.SuggestFlipsButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.SuggestFlipsButton.AutoSize = true;
+            this.SuggestFlipsButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
+            this.SuggestFlipsButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SuggestFlipsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.SuggestFlipsButton.Location = new System.Drawing.Point(5, 82);
+            this.SuggestFlipsButton.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.SuggestFlipsButton.Name = "SuggestFlipsButton";
-            this.SuggestFlipsButton.Size = new System.Drawing.Size(74, 59);
+            this.SuggestFlipsButton.Size = new System.Drawing.Size(83, 63);
             this.SuggestFlipsButton.TabIndex = 1;
             this.SuggestFlipsButton.Text = "Add Item to Watch List";
-            this.SuggestFlipsButton.UseVisualStyleBackColor = true;
+            this.SuggestFlipsButton.UseVisualStyleBackColor = false;
             // 
             // textBox1
             // 
             this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox1.Location = new System.Drawing.Point(4, 51);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.textBox1.Location = new System.Drawing.Point(5, 54);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(74, 23);
+            this.textBox1.Size = new System.Drawing.Size(83, 26);
             this.textBox1.TabIndex = 0;
             // 
             // ItemSearchLabel
             // 
             this.ItemSearchLabel.AutoSize = true;
             this.ItemSearchLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ItemSearchLabel.Location = new System.Drawing.Point(4, 0);
-            this.ItemSearchLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.ItemSearchLabel.Location = new System.Drawing.Point(5, 0);
+            this.ItemSearchLabel.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.ItemSearchLabel.Name = "ItemSearchLabel";
-            this.ItemSearchLabel.Size = new System.Drawing.Size(74, 48);
+            this.ItemSearchLabel.Size = new System.Drawing.Size(83, 51);
             this.ItemSearchLabel.TabIndex = 2;
             this.ItemSearchLabel.Text = "Item Search:";
             this.ItemSearchLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -129,11 +130,12 @@
             // 
             this.UpdatePricesButton.BackColor = System.Drawing.Color.SeaGreen;
             this.UpdatePricesButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.UpdatePricesButton.Font = new System.Drawing.Font("OCR A Extended", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.UpdatePricesButton.Location = new System.Drawing.Point(4, 246);
-            this.UpdatePricesButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.UpdatePricesButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.UpdatePricesButton.Font = new System.Drawing.Font("Lucida Sans Unicode", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.UpdatePricesButton.Location = new System.Drawing.Point(5, 262);
+            this.UpdatePricesButton.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.UpdatePricesButton.Name = "UpdatePricesButton";
-            this.UpdatePricesButton.Size = new System.Drawing.Size(74, 345);
+            this.UpdatePricesButton.Size = new System.Drawing.Size(83, 369);
             this.UpdatePricesButton.TabIndex = 3;
             this.UpdatePricesButton.Text = "UPDATE PRICES";
             this.UpdatePricesButton.UseVisualStyleBackColor = false;
@@ -141,11 +143,13 @@
             // 
             // itemGridView
             // 
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.WindowFrame;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
             dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Yellow;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Yellow;
             this.itemGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.itemGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.itemGridView.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.itemGridView.BackgroundColor = System.Drawing.Color.Black;
             this.itemGridView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.itemGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this.itemGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
@@ -188,7 +192,7 @@
             dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.itemGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.itemGridView.RowTemplate.Height = 25;
-            this.itemGridView.Size = new System.Drawing.Size(804, 594);
+            this.itemGridView.Size = new System.Drawing.Size(920, 634);
             this.itemGridView.TabIndex = 1;
             // 
             // ItemName
@@ -228,12 +232,13 @@
             // 
             // GEScraper
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.Controls.Add(this.tableLayoutPanel1);
+            this.Font = new System.Drawing.Font("Lucida Sans Unicode", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.Name = "GEScraper";
-            this.Size = new System.Drawing.Size(900, 600);
+            this.Size = new System.Drawing.Size(1029, 640);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.rightLayout.ResumeLayout(false);
             this.rightLayout.PerformLayout();

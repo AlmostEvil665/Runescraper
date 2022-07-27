@@ -41,6 +41,11 @@ namespace UIShell
             UpdatePricesButton.Text = "Getting current prices...";
         }
 
+        internal void updateCashStackBox(int CashStackSetting)
+        {
+            CashStackTextbox.Text = CashStackSetting.ToString();
+        }
+
         public void finishUpdatingPrices()
         {
             UpdatePricesButton.Enabled = true;
