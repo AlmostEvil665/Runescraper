@@ -61,7 +61,15 @@ namespace Runescraper
 
             DownloadFile(item_api_call, filename);
 
-            string item_rdata = File.ReadAllText(filename);
+            string item_rdata;
+
+            try
+            {
+                item_rdata = File.ReadAllText(filename);
+            } catch
+            {
+                return checkPricePercentile(item);
+            }
 
             //Cut the daily data we only want the average data
             item_rdata = item_rdata.Substring(item_rdata.IndexOf("average")).Replace("average\":{", "").Replace("\"", "").Replace("}", ""); ;

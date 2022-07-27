@@ -80,7 +80,10 @@ namespace UIShell
             SuggestWorker.DoWork += SuggestItems;
             SuggestWorker.RunWorkerCompleted += FinishSuggestions;
 
-            
+            if (!Directory.Exists("items"))
+            {
+                Directory.CreateDirectory("items");
+            }
         }
 
         private void ImportSettings()
