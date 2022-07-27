@@ -22,6 +22,7 @@ namespace UIShell
         {
             SuggestFlipsButton.Enabled = false;
             SuggestFlipsButton.Text = "Getting Suggestions...";
+            //
         }
 
         public void updateWithSuggestions(List<Item> suggestions)

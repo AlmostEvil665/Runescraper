@@ -12,8 +12,15 @@ namespace UIShell
     public partial class UIWindow : Form
     {
 
+        //constants related to dragging the form (label1_mousedown)
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HT_CAPTION = 0x2;
+
+
+        //constants related to resizing the form (WndProc)
+        private const int cGrip = 16;      // Grip size
+        private const int cCaption = 32;   // Caption bar height;
+
 
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
@@ -30,13 +37,16 @@ namespace UIShell
             //default code
             InitializeComponent();
             Assembly assembly = Assembly.GetExecutingAssembly();
+            this.FormBorderStyle = FormBorderStyle.None;
             
             //faster paint time settings
             this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             this.SetStyle(ControlStyles.UserPaint, true);
 
-            
+            this.DoubleBuffered = true;
+            this.SetStyle(ControlStyles.ResizeRedraw, true); // this is to avoid visual artifacts
+
             FlipGetterSetup();
             GEScraperSetup();
             ControllerSetup();
@@ -45,13 +55,36 @@ namespace UIShell
             
         }
 
+
+        protected override void WndProc(ref Message m)
+        {
+            if (m.Msg == 0x84)
+            {  // Trap WM_NCHITTEST
+                Point pos = new Point(m.LParam.ToInt32());
+                pos = this.PointToClient(pos);
+                if (pos.Y < cCaption)
+                {
+                    m.Result = (IntPtr)2;  // HTCAPTION
+                    return;
+                }
+                if (pos.X >= this.ClientSize.Width - cGrip && pos.Y >= this.ClientSize.Height - cGrip)
+                {
+                    m.Result = (IntPtr)17; // HTBOTTOMRIGHT
+                    return;
+                }
+            }
+            base.WndProc(ref m);
+        }
+
+
+
         private void ControllerSetup()
         {
-            controller.suggestFinished += FlipGetterForm.updateWithSuggestions;
-            controller.flipperscrapeFinished += FlipGetterForm.finishUpdatingPrices;
+            controller.suggestFinished += flipGetterForm.updateWithSuggestions;
+            controller.flipperscrapeFinished += flipGetterForm.finishUpdatingPrices;
 
             controller.scrapeFinished += UpdateGEList;
-            controller.UpdateCashStack += FlipGetterForm.updateCashStackBox;
+            controller.UpdateCashStack += flipGetterForm.updateCashStackBox;
             
             
             
@@ -99,11 +132,7 @@ namespace UIShell
             controller.SendSettings();
         }
 
-        private void MinBuyBox_TextChanged(object? sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
+       
         private void UpdateGEList(List<Item> items)
         {
             geScraperForm.addItems(items);
@@ -112,16 +141,16 @@ namespace UIShell
         private void FlipGetterSetup()
         {
 
-            Control[] controlArray = FlipGetterForm.Controls.Find("SuggestFlipsButton", true);
+            Control[] controlArray = flipGetterForm.Controls.Find("SuggestFlipsButton", true);
             Button suggestFlipsButton = (Button)controlArray[0];
             suggestFlipsButton.Click += SuggestFlip_Click;
 
-            controlArray = FlipGetterForm.Controls.Find("UpdatePricesButton", true);
+            controlArray = flipGetterForm.Controls.Find("UpdatePricesButton", true);
             Button updatePricesButton = (Button)controlArray[0];
             updatePricesButton.Click += UpdatePrices_Click;
 
 
-            controlArray = FlipGetterForm.Controls.Find("CashStackTextbox", true);
+            controlArray = flipGetterForm.Controls.Find("CashStackTextbox", true);
             TextBox CashStackBox = (TextBox)controlArray[0];
             CashStackBox.TextChanged += CashStackBoxChanged;
 
@@ -136,12 +165,12 @@ namespace UIShell
             updatePricesButton.Click += UpdatePrices_Click;
         }
 
-        private void FlipGetterButton_Click(object sender, EventArgs e)
-        {
-            RemoveShownForm();
-            FlipGetterForm.Visible = true;
-            FlipGetterForm.Focus();
-        }
+
+        /// <summary>
+        /// Signal receiver function to start suggestions
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SuggestFlip_Click(object sender, EventArgs e)
         {
             controller.StartSuggesting();
@@ -152,19 +181,35 @@ namespace UIShell
             controller.scrapeDB();
         }
 
+
+        private void FlipGetterButton_Click(object sender, EventArgs e)
+        {
+            movePanelAndRecolor(sender as Button);
+
+            RemoveShownForm();
+            
+            flipGetterForm.Visible = true;
+            flipGetterForm.Focus();
+        }
+
+
         
 
-        private void RemoveShownForm()
+        private void GESearchButton_Click(object sender, EventArgs e)
         {
-           FlipGetterForm.Visible = false;
-           geScraperForm.Visible = false;
+
+            movePanelAndRecolor(sender as Button);
+
+            RemoveShownForm();
+
+            //add form to layout
+            geScraperForm.Visible = true;
+            geScraperForm.Focus();
+
         }
 
-        private void Form1_Resize(object sender, EventArgs e)
-        {
-         //  ge.Size = new Size(this.Width - PaddingValue, this.Height - ge.Location.Y - PaddingValue );
+       
 
-        }
 
         private void SettingsButton_Click(object sender, EventArgs e)
         {
@@ -173,12 +218,54 @@ namespace UIShell
             sf.Show();
         }
 
-        private void GESearchButton_Click(object sender, EventArgs e)
+        private void movePanelAndRecolor(Button sender)
         {
-            RemoveShownForm();
-            geScraperForm.Visible = true;
-            geScraperForm.Focus();
-            //add form to layout
+            //move the navigation indicator and reset all button colors
+            moveNavPanel(sender as Button);
+            resetButtonColors();
+
+            //set button to show highlight
+            sender.BackColor = Color.Yellow;
+            sender.ForeColor = Color.FromArgb(24, 24, 24);
+        }
+
+        /// <summary>
+        /// Moves the navigation panel to above the provided button
+        /// </summary>
+        /// <param name="sender">Button to "highlight"</param>
+        private void moveNavPanel(Button sender)
+        {
+            pnlNav.Visible = true;
+            pnlNav.Width = sender.Width;
+            pnlNav.Top = sender.Top;
+            pnlNav.Left = sender.Left;
+        }
+
+        private void RemoveShownForm()
+        {
+            flipGetterForm.Visible = false;
+            geScraperForm.Visible = false;
+        }
+
+        /// <summary>
+        /// Resets the menu button colors to their defaults
+        /// </summary>
+        private void resetButtonColors()
+        {
+            GESearchButton.ForeColor = Color.Yellow;
+            GESearchButton.BackColor = Color.FromArgb(24, 24, 24);
+
+            FlipGetterButton.ForeColor = Color.Yellow;
+            FlipGetterButton.BackColor = Color.FromArgb(24, 24, 24);
+
+            HallofFlipsButton.ForeColor = Color.Yellow;
+            HallofFlipsButton.BackColor = Color.FromArgb(24, 24, 24);
+
+            AlchFinderButton.ForeColor = Color.Yellow;
+            AlchFinderButton.BackColor = Color.FromArgb(24, 24, 24);
+
+            FlipTrackerButton.ForeColor = Color.Yellow;
+            FlipTrackerButton.BackColor = Color.FromArgb(24, 24, 24);
         }
 
         private void SaveSettings()
@@ -276,6 +363,11 @@ namespace UIShell
                 ReleaseCapture();
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
             }
+        }
+
+        private void UIWindow_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

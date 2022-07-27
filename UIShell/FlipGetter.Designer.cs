@@ -59,12 +59,12 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.suggestionTable.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.suggestionTable.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.suggestionTable.BackgroundColor = System.Drawing.Color.Black;
+            this.suggestionTable.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(24)))));
             this.suggestionTable.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.suggestionTable.CausesValidation = false;
             this.suggestionTable.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(24)))));
             dataGridViewCellStyle1.Font = new System.Drawing.Font("OCR A Extended", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Yellow;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
@@ -84,7 +84,7 @@
             this.MarginColumn,
             this.Profit});
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(24)))));
             dataGridViewCellStyle2.Font = new System.Drawing.Font("OCR A Extended", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Yellow;
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
@@ -97,7 +97,7 @@
             this.suggestionTable.Margin = new System.Windows.Forms.Padding(4);
             this.suggestionTable.Name = "suggestionTable";
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(24)))));
             dataGridViewCellStyle3.Font = new System.Drawing.Font("OCR A Extended", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Yellow;
             dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
@@ -162,6 +162,7 @@
             this.mainLayout.Controls.Add(this.rightLayout, 1, 0);
             this.mainLayout.Controls.Add(this.suggestionTable, 0, 0);
             this.mainLayout.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mainLayout.ForeColor = System.Drawing.Color.Yellow;
             this.mainLayout.Location = new System.Drawing.Point(0, 0);
             this.mainLayout.Margin = new System.Windows.Forms.Padding(4);
             this.mainLayout.Name = "mainLayout";
@@ -172,7 +173,7 @@
             // 
             // rightLayout
             // 
-            this.rightLayout.BackColor = System.Drawing.Color.Black;
+            this.rightLayout.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(24)))));
             this.rightLayout.ColumnCount = 1;
             this.rightLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.rightLayout.Controls.Add(this.SuggestFlipsButton, 0, 2);
@@ -212,11 +213,13 @@
             // 
             // CashStackTextbox
             // 
+            this.CashStackTextbox.BackColor = System.Drawing.Color.Gray;
+            this.CashStackTextbox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.CashStackTextbox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.CashStackTextbox.Location = new System.Drawing.Point(4, 63);
             this.CashStackTextbox.Margin = new System.Windows.Forms.Padding(4);
             this.CashStackTextbox.Name = "CashStackTextbox";
-            this.CashStackTextbox.Size = new System.Drawing.Size(87, 27);
+            this.CashStackTextbox.Size = new System.Drawing.Size(87, 20);
             this.CashStackTextbox.TabIndex = 0;
             // 
             // CashStackLabel
@@ -250,7 +253,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(24)))));
             this.Controls.Add(this.mainLayout);
             this.Font = new System.Drawing.Font("Lucida Sans Unicode", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.Margin = new System.Windows.Forms.Padding(4);
