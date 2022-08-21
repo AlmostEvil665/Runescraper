@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Linq;
 
 namespace Runescraper_v5._13
 {
@@ -51,6 +52,8 @@ namespace Runescraper_v5._13
             }
         }
 
+
+
         public bool checkPricePercentile(Item item)
         {
             string item_api_call = "https://services.runescape.com/m=itemdb_oldschool/api/graph/" + item.ID + ".json";
@@ -65,7 +68,8 @@ namespace Runescraper_v5._13
             //Cut the daily data we only want the average data
             item_rdata = item_rdata.Substring(item_rdata.IndexOf("average")).Replace("average\":{", "").Replace("\"", "").Replace("}", ""); ;
             var average_daily_data_arr = item_rdata.Split(',');
-            foreach(var average_daily_data in average_daily_data_arr)
+            var week_daily_data_arr = average_daily_data_arr.Skip(Math.Max(0, average_daily_data_arr.Count() - 7));
+            foreach (var average_daily_data in week_daily_data_arr)
             {
                 var data = average_daily_data.Split(':');
 

@@ -9,7 +9,7 @@ namespace Runescraper_v5._13
 
     class Item : IComparable<Item>
     {
-        public int price_percentile = (int)(.4 * 180) - 1;
+        public int price_percentile = 3; // bottom 40% of 7 days
         public int ID;
         public int high;
         public int low;
