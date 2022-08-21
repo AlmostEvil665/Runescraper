@@ -15,6 +15,7 @@ namespace Runescraper_v5._13
         string EP_mapping;
         String EP_volume;
         WebClient client;
+        int nature_rn_price;
 
         public Scraper()
         {
@@ -81,6 +82,16 @@ namespace Runescraper_v5._13
 
 
             return item.historical_data[item.price_percentile] > item.low;
+        }
+
+        public int checkHighAlch(Item item)
+        {
+            return item.halch - item.high - nature_rn_price;
+        }
+
+        public int checkLowAlch(Item item)
+        {
+            return item.lalch - item.low - nature_rn_price;
         }
 
         public List<Item> refresh_items()
@@ -150,6 +161,9 @@ namespace Runescraper_v5._13
                 Int32.TryParse(vals[2], out item.high);
                 Int32.TryParse(vals[6], out item.low);
 
+                if (item.ID == 561)
+                    nature_rn_price = item.high;
+
                 items[item.ID.ToString()] = item;
             }
 
@@ -175,6 +189,8 @@ namespace Runescraper_v5._13
                 try
                 {
                     item = items[vals[0]];
+                    Int32.TryParse(vals[14], out item.halch);
+                    Int32.TryParse(vals[8], out item.lalch);
                 }
                 catch
                 {

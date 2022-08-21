@@ -21,6 +21,8 @@ namespace Runescraper_v5._13
         public int ge_price;
         public string state;
         public int user_price;
+        public int halch;
+        public int lalch;
         public List<int> historical_data;
         public DateTime orderTime;
 
