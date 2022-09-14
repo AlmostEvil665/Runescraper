@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UIController", "UniversalCo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RuneScraper2", "RuneScraper2\RuneScraper2.csproj", "{13D56352-4B70-42E8-87AA-790CAD987197}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Runescraper3", "Runescraper3\Runescraper3.csproj", "{2F641A1E-E3C7-4FA4-9667-BB847815AFB1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{13D56352-4B70-42E8-87AA-790CAD987197}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13D56352-4B70-42E8-87AA-790CAD987197}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{13D56352-4B70-42E8-87AA-790CAD987197}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F641A1E-E3C7-4FA4-9667-BB847815AFB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F641A1E-E3C7-4FA4-9667-BB847815AFB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F641A1E-E3C7-4FA4-9667-BB847815AFB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F641A1E-E3C7-4FA4-9667-BB847815AFB1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

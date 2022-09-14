@@ -70,11 +70,11 @@
             this.tableLayoutPanel1.Controls.Add(this.ExitButton, 8, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableLayoutPanel1.ForeColor = System.Drawing.Color.Yellow;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 48);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(5, 50);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(951, 42);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(947, 42);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // FlipGetterButton
@@ -144,7 +144,7 @@
             // 
             this.SettingsButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.SettingsButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.SettingsButton.Location = new System.Drawing.Point(654, 3);
+            this.SettingsButton.Location = new System.Drawing.Point(650, 3);
             this.SettingsButton.Name = "SettingsButton";
             this.SettingsButton.Size = new System.Drawing.Size(94, 36);
             this.SettingsButton.TabIndex = 4;
@@ -156,7 +156,7 @@
             // 
             this.FullScreenWindowButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.FullScreenWindowButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.FullScreenWindowButton.Location = new System.Drawing.Point(754, 3);
+            this.FullScreenWindowButton.Location = new System.Drawing.Point(750, 3);
             this.FullScreenWindowButton.Name = "FullScreenWindowButton";
             this.FullScreenWindowButton.Size = new System.Drawing.Size(94, 36);
             this.FullScreenWindowButton.TabIndex = 6;
@@ -167,7 +167,7 @@
             // 
             this.ExitButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ExitButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.ExitButton.Location = new System.Drawing.Point(854, 3);
+            this.ExitButton.Location = new System.Drawing.Point(850, 3);
             this.ExitButton.Name = "ExitButton";
             this.ExitButton.Size = new System.Drawing.Size(94, 36);
             this.ExitButton.TabIndex = 7;
@@ -181,9 +181,9 @@
             this.label1.Dock = System.Windows.Forms.DockStyle.Top;
             this.label1.Font = new System.Drawing.Font("Lucida Console", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label1.ForeColor = System.Drawing.Color.Yellow;
-            this.label1.Location = new System.Drawing.Point(3, 3);
+            this.label1.Location = new System.Drawing.Point(5, 5);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(951, 35);
+            this.label1.Size = new System.Drawing.Size(947, 35);
             this.label1.TabIndex = 2;
             this.label1.Text = "Flipscraper - The Ultimate OSRS Moneymaking Tool";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -194,9 +194,9 @@
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(24)))));
             this.panel1.Controls.Add(this.pnlNav);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(3, 38);
+            this.panel1.Location = new System.Drawing.Point(5, 40);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(951, 10);
+            this.panel1.Size = new System.Drawing.Size(947, 10);
             this.panel1.TabIndex = 4;
             // 
             // pnlNav
@@ -213,10 +213,10 @@
             this.flipGetterForm.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(24)))));
             this.flipGetterForm.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flipGetterForm.Font = new System.Drawing.Font("Lucida Sans Unicode", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.flipGetterForm.Location = new System.Drawing.Point(3, 90);
+            this.flipGetterForm.Location = new System.Drawing.Point(5, 92);
             this.flipGetterForm.Margin = new System.Windows.Forms.Padding(4);
             this.flipGetterForm.Name = "flipGetterForm";
-            this.flipGetterForm.Size = new System.Drawing.Size(951, 385);
+            this.flipGetterForm.Size = new System.Drawing.Size(947, 381);
             this.flipGetterForm.TabIndex = 5;
             this.flipGetterForm.Visible = false;
             // 
@@ -225,9 +225,9 @@
             this.geScraperForm.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.geScraperForm.Dock = System.Windows.Forms.DockStyle.Fill;
             this.geScraperForm.Font = new System.Drawing.Font("Lucida Sans Unicode", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.geScraperForm.Location = new System.Drawing.Point(3, 90);
+            this.geScraperForm.Location = new System.Drawing.Point(5, 92);
             this.geScraperForm.Name = "geScraperForm";
-            this.geScraperForm.Size = new System.Drawing.Size(951, 385);
+            this.geScraperForm.Size = new System.Drawing.Size(947, 381);
             this.geScraperForm.TabIndex = 6;
             this.geScraperForm.Visible = false;
             // 
@@ -247,7 +247,7 @@
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Lucida Console", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.Name = "UIWindow";
-            this.Padding = new System.Windows.Forms.Padding(3);
+            this.Padding = new System.Windows.Forms.Padding(5);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Flipscape";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.UIWindow_FormClosed);

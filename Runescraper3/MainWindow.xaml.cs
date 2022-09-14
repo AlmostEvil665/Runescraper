@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace RuneScraper2
+namespace Runescraper3
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-        
+      
         public MainWindow()
         {
             InitializeComponent();
@@ -31,7 +31,7 @@ namespace RuneScraper2
             FlipButton.Content = "Flip";
         }
 
-     
+
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -48,7 +48,7 @@ namespace RuneScraper2
 
         private void FlipButton_Click(object sender, RoutedEventArgs e)
         {
-        
+
             if (FlipSuggesterWindow.Visibility == Visibility.Collapsed)
             {
                 CollapseAll();
@@ -57,7 +57,7 @@ namespace RuneScraper2
 
         }
 
-       
+
 
         private void ScrapeButton_Click(object sender, RoutedEventArgs e)
         {
@@ -69,11 +69,11 @@ namespace RuneScraper2
             }
         }
 
-       
 
-       
 
-       
+
+
+
 
         private void MenuRibbonGrid_MouseDown(object sender, MouseButtonEventArgs e)
         {
